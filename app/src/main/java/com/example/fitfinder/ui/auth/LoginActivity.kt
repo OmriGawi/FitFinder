@@ -4,12 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.fitfinder.data.repository.auth.AuthRepository
 import com.example.fitfinder.databinding.ActivityLoginBinding
 import com.example.fitfinder.util.Constants
 import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.auth.LoginViewModel
+import es.dmoral.toasty.Toasty
 
 class LoginActivity : AppCompatActivity() {
 
@@ -42,12 +44,18 @@ class LoginActivity : AppCompatActivity() {
         }
 
         viewModel.result.observe(this) { result ->
-            if (result) {
-                //TODO: Navigate to Profile screen
-            } else {
-                //TODO: Add toast message
+            when (result) {
+                is AuthRepository.LoginResult.Success -> {
+                    // Handle successful login
+                    Toasty.success(applicationContext, "Login Successful!", Toast.LENGTH_LONG, true).show()
+                }
+                is AuthRepository.LoginResult.Error -> {
+                    // Handle error
+                    Toasty.error(applicationContext, result.message, Toast.LENGTH_LONG, true).show()
+                }
             }
         }
+
 
         //Navigate to SignupActivity
         binding.tvRegister.setOnClickListener {

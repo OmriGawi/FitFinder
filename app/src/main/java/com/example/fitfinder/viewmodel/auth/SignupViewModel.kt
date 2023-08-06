@@ -9,7 +9,7 @@ import java.util.*
 
 class SignupViewModel(private val repository: AuthRepository) : ViewModel() {
 
-    val result = MutableLiveData<Boolean>()
+    val result = MutableLiveData<AuthRepository.RegistrationResult>()
 
     fun register(fullName: String, birthDate: String, email: String, password: String) {
         // Convert the full name to first name and last name

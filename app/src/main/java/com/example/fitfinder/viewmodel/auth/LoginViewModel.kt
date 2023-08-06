@@ -6,7 +6,7 @@ import com.example.fitfinder.data.repository.auth.AuthRepository
 
 class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
 
-    val result = MutableLiveData<Boolean>()
+    val result = MutableLiveData<AuthRepository.LoginResult>()
 
     fun login(email: String, password: String) {
         repository.login(email, password, result)
