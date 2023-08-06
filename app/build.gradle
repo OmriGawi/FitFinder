@@ -57,4 +57,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:22.1.1'
     implementation 'com.google.firebase:firebase-firestore:24.7.0'
 
+    // Toasty Repository
+    implementation 'com.github.GrenderG:Toasty:1.5.2'
+
 }

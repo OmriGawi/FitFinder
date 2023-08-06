@@ -17,6 +17,7 @@ class ViewModelFactory(private val repository: BaseRepository) : ViewModelProvid
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(repository as AuthRepository) as T
         }
+
         // Add more conditions for other ViewModel classes
         throw IllegalArgumentException("Unknown ViewModel class")
     }
