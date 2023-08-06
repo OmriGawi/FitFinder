@@ -48,13 +48,17 @@ class SignupActivity : AppCompatActivity(), DatePickerFragment.OnDateOfBirthSetL
         }
 
         viewModel.result.observe(this) { result ->
-            if (result) {
-                // Registration succeeded
-                Toasty.success(applicationContext, "Success!", Toast.LENGTH_LONG, true).show();
-            } else {
-                // Show an error message
+            when (result) {
+                is AuthRepository.RegistrationResult.Success -> {
+                    Toasty.success(applicationContext, "Success!", Toast.LENGTH_LONG, true).show()
+                }
+                is AuthRepository.RegistrationResult.Error -> {
+                    // Handle specific error
+                    Toasty.error(applicationContext, result.message, Toast.LENGTH_LONG, true).show()
+                }
             }
         }
+
 
         binding.btnDate.setOnClickListener {
             val datePickerFragment = DatePickerFragment()

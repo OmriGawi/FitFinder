@@ -26,7 +26,7 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         // Create a new instance of DatePickerDialog with THEME_HOLO_LIGHT and return it
-        return DatePickerDialog(
+        val datePickerDialog = DatePickerDialog(
             requireContext(),
             AlertDialog.THEME_HOLO_LIGHT,
             this,
@@ -35,7 +35,12 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
             day
         )
 
+        // Set the DatePicker's maximum date to today
+        datePickerDialog.datePicker.maxDate = c.timeInMillis
+
+        return datePickerDialog
     }
+
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
         // Format the selected date as day/month/year
