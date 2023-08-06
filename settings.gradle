@@ -10,6 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // Toasty Repository
+        maven { url "https://jitpack.io" }
     }
 }
 rootProject.name = "FitFinder"

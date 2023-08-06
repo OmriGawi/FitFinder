@@ -4,12 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.fitfinder.data.repository.auth.AuthRepository
 import com.example.fitfinder.databinding.ActivitySignupBinding
 import com.example.fitfinder.util.Constants
 import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.auth.SignupViewModel
+import es.dmoral.toasty.Toasty
 
 class SignupActivity : AppCompatActivity(), DatePickerFragment.OnDateOfBirthSetListener {
 
@@ -48,6 +50,7 @@ class SignupActivity : AppCompatActivity(), DatePickerFragment.OnDateOfBirthSetL
         viewModel.result.observe(this) { result ->
             if (result) {
                 // Registration succeeded
+                Toasty.success(applicationContext, "Success!", Toast.LENGTH_LONG, true).show();
             } else {
                 // Show an error message
             }
