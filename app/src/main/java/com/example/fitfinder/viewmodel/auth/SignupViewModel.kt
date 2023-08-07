@@ -7,10 +7,22 @@ import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * ViewModel class for managing the user registration logic in the app.
+ * @property repository The authentication repository instance responsible for executing the registration operations.
+ */
 class SignupViewModel(private val repository: AuthRepository) : ViewModel() {
 
     val result = MutableLiveData<AuthRepository.RegistrationResult>()
 
+    /**
+     * Initiates a registration operation using the provided user details.
+     *
+     * @param fullName The complete name of the user (first name and last name combined).
+     * @param birthDate The birth date of the user in a specific string format that can be converted to a Firestore Timestamp.
+     * @param email The email address of the user.
+     * @param password The password chosen by the user for their account.
+     */
     fun register(fullName: String, birthDate: String, email: String, password: String) {
         // Convert the full name to first name and last name
         val (firstName, lastName) = convertFullNameToFirstLastName(fullName)

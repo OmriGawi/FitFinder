@@ -56,6 +56,10 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        binding.tvForgotPassword.setOnClickListener {
+            val fragment = ForgotPasswordFragment()
+            fragment.show(supportFragmentManager, "forgotPasswordDialog")
+        }
 
         //Navigate to SignupActivity
         binding.tvRegister.setOnClickListener {

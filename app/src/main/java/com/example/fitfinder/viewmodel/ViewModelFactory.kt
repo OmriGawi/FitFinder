@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.fitfinder.data.repository.BaseRepository
 import com.example.fitfinder.data.repository.auth.AuthRepository
+import com.example.fitfinder.viewmodel.auth.ForgotPasswordViewModel
 import com.example.fitfinder.viewmodel.auth.LoginViewModel
 import com.example.fitfinder.viewmodel.auth.SignupViewModel
 
@@ -16,6 +17,10 @@ class ViewModelFactory(private val repository: BaseRepository) : ViewModelProvid
         //Login
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(repository as AuthRepository) as T
+        }
+        // Forgot Password
+        if (modelClass.isAssignableFrom(ForgotPasswordViewModel::class.java)) {
+            return ForgotPasswordViewModel(repository as AuthRepository) as T
         }
 
         // Add more conditions for other ViewModel classes
