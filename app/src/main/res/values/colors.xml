@@ -3,7 +3,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primaryColor">#50C2C9</color>
-    <color name="secondaryColor">#55BBAF</color>
+    <color name="primaryColor">#50C2C9</color> <!-- OLD Version #50C2C9-->
+    <color name="secondaryColor">#55BBAF</color> <!-- OLD Version #55BBAF-->
     <color name="background">#EEEEEE</color>
+
+    <color name="nav_icon_selected">@color/black</color>
+    <color name="nav_icon_unselected">#FFFFFFFF</color>
+
 </resources>

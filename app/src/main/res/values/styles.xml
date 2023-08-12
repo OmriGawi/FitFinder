@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.FitFinder" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <style name="Theme.FitFinder" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorAccent">@color/black</item>
+        <item name="colorOnPrimary">@color/background</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!--TODO: fix title to use poppins font-->
+        <!--<item name="actionBarStyle">@style/MyActionBar</item> -->
+    </style>
+
+    <style name="Theme.FitFinder.Auth" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorAccent">@color/black</item>
@@ -16,5 +27,39 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
+    <!-- Navigation Bar-->
+    <style name="BottomNavigationViewStyle">
+        <item name="android:background">@color/primaryColor</item>
+        <item name="itemIconTint">@drawable/nav_icon_color</item>
+        <item name="itemTextColor">@drawable/nav_icon_color</item>
+        <item name="itemIconSize">@dimen/bottom_navigation_icon_size</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigation</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNavigation</item>
+    </style>
+
+    <style name="TextAppearance.BottomNavigation" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:fontFamily">@font/poppinssemibold</item>
+        <!-- Add any other text styling attributes if needed -->
+    </style>
+
+
+
+    <!-- Action Bar-->
+    <style name="ActionBarTitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">@font/poppinssemibold</item>
+        <item name="android:textColor">@color/black</item> <!-- Set your preferred text color here -->
+        <!-- Add any other text styling attributes you'd like -->
+    </style>
+
+    <style name="MyActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="titleTextStyle">@style/ActionBarTitleText</item>
+        <item name="android:background">@color/primaryColor</item> <!-- This sets the action bar's background color -->
+    </style>
+
+
+
+
+
 
 </resources>

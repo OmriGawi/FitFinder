@@ -20,4 +20,8 @@ class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
     fun login(email: String, password: String) {
         repository.login(email, password, result)
     }
+
+    fun isUserLoggedIn(): Boolean {
+        return repository.isUserLoggedIn()
+    }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/profile"
+        android:id="@+id/bottom_nav_profile"
+        android:icon="@drawable/ic_nav_profile"/>
+
+    <item android:title="@string/messages"
+        android:id="@+id/bottom_nav_messages"
+        android:icon="@drawable/ic_nav_messages"/>
+
+    <item android:title="@string/calendar"
+        android:id="@+id/bottom_nav_calendar"
+        android:icon="@drawable/ic_nav_calendar"/>
+
+    <item android:title="@string/search"
+        android:id="@+id/bottom_nav_search"
+        android:icon="@drawable/ic_nav_search"/>
+
+    <item android:title="@string/exercise"
+        android:id="@+id/bottom_nav_exercise"
+        android:icon="@drawable/ic_nav_exercise"/>
+</menu>

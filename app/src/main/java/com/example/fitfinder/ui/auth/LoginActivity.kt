@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.fitfinder.data.repository.auth.AuthRepository
 import com.example.fitfinder.databinding.ActivityLoginBinding
+import com.example.fitfinder.ui.MainActivity
 import com.example.fitfinder.util.Constants
 import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.auth.LoginViewModel
@@ -34,6 +35,10 @@ class LoginActivity : AppCompatActivity() {
         val viewModelFactory = ViewModelFactory(authRepository)
         viewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
 
+        if (viewModel.isUserLoggedIn()) {
+            navigateToMainActivity()
+        }
+
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
@@ -47,7 +52,8 @@ class LoginActivity : AppCompatActivity() {
             when (result) {
                 is AuthRepository.LoginResult.Success -> {
                     // Handle successful login
-                    Toasty.success(applicationContext, "Login Successful!", Toast.LENGTH_LONG, true).show()
+                    Toasty.success(applicationContext, "Login Successful!", Toast.LENGTH_SHORT, true).show()
+                    navigateToMainActivity()
                 }
                 is AuthRepository.LoginResult.Error -> {
                     // Handle error
@@ -67,6 +73,12 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun navigateToMainActivity(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     /**

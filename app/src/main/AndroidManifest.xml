@@ -12,12 +12,15 @@
         android:theme="@style/Theme.FitFinder"
         tools:targetApi="31">
         <activity
+            android:theme="@style/Theme.FitFinder"
             android:name=".ui.MainActivity"
             android:exported="false" />
         <activity
+            android:theme="@style/Theme.FitFinder.Auth"
             android:name=".ui.auth.SignupActivity"
             android:exported="false" />
         <activity
+            android:theme="@style/Theme.FitFinder.Auth"
             android:name=".ui.auth.LoginActivity"
             android:exported="true">
             <intent-filter>

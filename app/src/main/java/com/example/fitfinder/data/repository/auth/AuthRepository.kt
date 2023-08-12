@@ -50,6 +50,9 @@ class AuthRepository : BaseRepository() {
             }
     }
 
+    fun isUserLoggedIn(): Boolean {
+        return auth.currentUser != null
+    }
 
     /**
      * Logs in an existing user with the given credentials.
@@ -73,6 +76,20 @@ class AuthRepository : BaseRepository() {
                     result.value = LoginResult.Error(errorMessage)
                 }
             }
+    }
+
+    /**
+     * Logs out an existing user
+     * @param result A live data object to post the logout result.
+     */
+    fun logout(result: MutableLiveData<LogoutResult>) {
+        try {
+            // Use the Firebase auth instance to sign out
+            auth.signOut()
+            result.postValue(LogoutResult.Success)
+        } catch (e: Exception) {
+            result.postValue(LogoutResult.Error(e.message ?: "Logout failed"))
+        }
     }
 
     /**
@@ -113,6 +130,15 @@ class AuthRepository : BaseRepository() {
     sealed class LoginResult {
         object Success : LoginResult()
         data class Error(val message: String) : LoginResult()
+        // Can add other specific errors here if needed.
+    }
+
+    /**
+     * Sealed class representing the possible results of logout.
+     */
+    sealed class LogoutResult {
+        object Success : LogoutResult()
+        data class Error(val message: String) : LogoutResult()
         // Can add other specific errors here if needed.
     }
 
