@@ -8,8 +8,8 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:theme="@style/Theme.FitFinder"
+        android:supportsRtl="false"
         tools:targetApi="31">
         <activity
             android:theme="@style/Theme.FitFinder"
@@ -18,10 +18,12 @@
         <activity
             android:theme="@style/Theme.FitFinder.Auth"
             android:name=".ui.auth.SignupActivity"
+            android:launchMode="singleTop"
             android:exported="false" />
         <activity
             android:theme="@style/Theme.FitFinder.Auth"
             android:name=".ui.auth.LoginActivity"
+            android:launchMode="singleTop"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

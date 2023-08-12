@@ -69,14 +69,14 @@ class SignupActivity : AppCompatActivity(), DatePickerFragment.OnDateOfBirthSetL
         binding.ivBack.setOnClickListener {
             // Start the LoginActivity when the "Back" imageView is clicked
             val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
-            finish()
         }
         binding.tvLogin.setOnClickListener {
             // Start the LoginActivity when the "Login" textView is clicked
             val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
-            finish()
         }
     }
 
