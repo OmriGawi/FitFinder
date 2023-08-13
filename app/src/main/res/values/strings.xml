@@ -26,5 +26,9 @@
     <string name="search">Search</string>
     <string name="exercise">Exercise</string>
     <string name="logout">Logout</string>
+    <string name="view_profile">View Profile</string>
+    <string name="edit_pictures">Edit Pictures</string>
+    <string name="relevant_information">Relevant Information</string>
+    <string name="user_type">User Type</string>
 
 </resources>

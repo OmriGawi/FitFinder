@@ -10,4 +10,6 @@
     <color name="nav_icon_selected">@color/black</color>
     <color name="nav_icon_unselected">#FFFFFFFF</color>
 
+    <color name="background_text">#DFE3E6</color>
+
 </resources>
