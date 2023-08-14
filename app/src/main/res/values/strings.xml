@@ -30,5 +30,11 @@
     <string name="edit_pictures">Edit Pictures</string>
     <string name="relevant_information">Relevant Information</string>
     <string name="user_type">User Type</string>
+    <string name="workout_times">Workout Times</string>
+    <string name="sport_categories">Sport Categories</string>
+    <string name="about_me">About Me</string>
+    <string name="write_a_description_here">Write a description here…</string>
+    <string name="save">Save</string>
+    <string name="iv_add_description">iv_add_description</string>
 
 </resources>

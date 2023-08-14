@@ -60,4 +60,9 @@ dependencies {
     // Toasty Repository
     implementation 'com.github.GrenderG:Toasty:1.5.2'
 
+    // Material-MultiSelection-Spinner
+    // https://github.com/zeeshan5422/Material-MultiSelection-Spinner
+    implementation 'com.github.zeeshan5422:Material-MultiSelection-Spinner:1.0'
+
+
 }
