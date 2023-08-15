@@ -9,10 +9,9 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:hint="Category">
+        android:layout_height="wrap_content">
         <AutoCompleteTextView
-            android:id="@+id/category_dropdown"
+            android:id="@+id/dropdown_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -21,10 +20,9 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:hint="Skill Level">
+        android:layout_height="wrap_content">
         <AutoCompleteTextView
-            android:id="@+id/skill_level_dropdown"
+            android:id="@+id/dropdown_skillLevel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>

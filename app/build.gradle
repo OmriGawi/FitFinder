@@ -64,5 +64,8 @@ dependencies {
     // https://github.com/zeeshan5422/Material-MultiSelection-Spinner
     implementation 'com.github.zeeshan5422:Material-MultiSelection-Spinner:1.0'
 
+    // Glide Repository
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+
 
 }

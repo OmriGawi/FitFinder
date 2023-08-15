@@ -21,7 +21,18 @@ class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
         repository.login(email, password, result)
     }
 
+    /**
+     * Initiates a check to check if user is already logged in
+     */
     fun isUserLoggedIn(): Boolean {
         return repository.isUserLoggedIn()
     }
+
+    /**
+     * Initiates a get user id operation
+     */
+    fun getCurrentUserId(): String? {
+        return repository.getCurrentUserId()
+    }
+
 }

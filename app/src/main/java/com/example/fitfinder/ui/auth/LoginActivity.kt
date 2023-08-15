@@ -10,6 +10,7 @@ import com.example.fitfinder.data.repository.auth.AuthRepository
 import com.example.fitfinder.databinding.ActivityLoginBinding
 import com.example.fitfinder.ui.MainActivity
 import com.example.fitfinder.util.Constants
+import com.example.fitfinder.util.SharedPreferencesUtil
 import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.auth.LoginViewModel
 import es.dmoral.toasty.Toasty
@@ -51,7 +52,10 @@ class LoginActivity : AppCompatActivity() {
         viewModel.result.observe(this) { result ->
             when (result) {
                 is AuthRepository.LoginResult.Success -> {
-                    // Handle successful login
+                    // Save user ID to SharedPreferences
+                    viewModel.getCurrentUserId()
+                        ?.let { SharedPreferencesUtil.saveUserId(applicationContext, it) }
+
                     Toasty.success(applicationContext, "Login Successful!", Toast.LENGTH_SHORT, true).show()
                     navigateToMainActivity()
                 }

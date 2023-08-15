@@ -54,6 +54,11 @@ class AuthRepository : BaseRepository() {
         return auth.currentUser != null
     }
 
+    fun getCurrentUserId(): String? {
+        return auth.currentUser?.uid
+    }
+
+
     /**
      * Logs in an existing user with the given credentials.
      * @param email The email of the user.
