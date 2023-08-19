@@ -2,30 +2,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:padding="10dp">
+    android:gravity="center_vertical">
 
-    <!-- Sport Category Dropdown -->
-    <com.google.android.material.textfield.TextInputLayout
+    <!-- Sport Category Display -->
+    <TextView
+        android:id="@+id/tv_category"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="wrap_content">
-        <AutoCompleteTextView
-            android:id="@+id/dropdown_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="30dp"
+        android:fontFamily="@font/poppinsregular"
+        android:padding="5dp"/>
 
-    <!-- Skill Level Dropdown -->
-    <com.google.android.material.textfield.TextInputLayout
+    <!-- Skill Level Display -->
+    <TextView
+        android:id="@+id/tv_skillLevel"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="wrap_content">
-        <AutoCompleteTextView
-            android:id="@+id/dropdown_skillLevel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="30dp"
+        android:fontFamily="@font/poppinsregular"
+        android:padding="5dp"/>
 
     <!-- Remove Icon -->
     <ImageView

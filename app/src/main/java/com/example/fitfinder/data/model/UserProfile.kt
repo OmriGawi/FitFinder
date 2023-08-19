@@ -5,7 +5,7 @@ data class UserProfile(
     val userType: UserType,
     val profilePictureUrl: String?,
     val additionalPictures: List<String>,
-    val sportCategories: List<SportCategory>,
+    val sportCategories: MutableList<SportCategory>,
     val workoutTimes: List<WorkoutTime>,
     val description: String?
 )

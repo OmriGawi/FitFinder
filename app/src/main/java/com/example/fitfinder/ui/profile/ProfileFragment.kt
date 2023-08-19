@@ -34,14 +34,9 @@ class ProfileFragment : Fragment() {
     private lateinit var sportCategoriesViewModel: SportCategoriesViewModel
 
     // variables
-    private lateinit var userId : String
-    private val workoutTimes = WorkoutTime.values().map { it.name }.toMutableList()
+    private lateinit var userId: String
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -74,10 +69,8 @@ class ProfileFragment : Fragment() {
                 binding.autoCompleteTextViewUserType.setText(profile.userType.toString(), false)
 
                 // Set the Workout Times in MultiSelectionSpinner
-                val allWorkoutTimes = WorkoutTime.values().map { it.name }
-                val selectedIndices = profile.workoutTimes.map { allWorkoutTimes.indexOf(it.name) }
-
-                binding.multiSelectionWorkoutTimes.setSelection(selectedIndices.toIntArray())
+                val workoutTimesText = profile.workoutTimes.joinToString(", ") { it.name }
+                binding.multiSelectionWorkoutTimes.setText(workoutTimesText)
 
                 // Set the About Me (description)
                 profile.description?.let { description ->
@@ -86,32 +79,12 @@ class ProfileFragment : Fragment() {
                     }
                 }
 
-                // For Sport Categories:
-                // First, fetch all available categories from the separate ViewModel
-                // This part assumes you've already instantiated the sportCategoriesViewModel and called its fetchSportCategories function.
-                sportCategoriesViewModel.sportCategories.observe(viewLifecycleOwner) { allCategories ->
-                    // Set Sport Categories in RecyclerView
-                    val adapter = SportCategoriesAdapter(profile.sportCategories, allCategories)
-                    binding.rvSportCategories.adapter = adapter
-                    binding.rvSportCategories.layoutManager = LinearLayoutManager(requireContext())
-                }
-            }
-        }
-
-
-
-        userProfileViewModel.userProfile.observe(viewLifecycleOwner) { userProfile ->
-            if (userProfile != null) {
                 // Pass the user's sport categories to the setupRecyclerView method
-                setupRecyclerView(
-                    userProfile.sportCategories,
-                    emptyList()
-                )  // At first, the allCategories list is empty
+                setupRecyclerView(profile.sportCategories)
             }
         }
 
         binding.ivAdd.setOnClickListener {
-            addNewSportCategory()
         }
     }
 
@@ -128,29 +101,11 @@ class ProfileFragment : Fragment() {
         binding.multiSelectionWorkoutTimes.items = workoutTimes
     }
 
-
-    private fun setupRecyclerView(userCategories: List<SportCategory>, allCategories: List<String>) {
-        val adapter = SportCategoriesAdapter(userCategories, allCategories)
+    private fun setupRecyclerView(userCategories: MutableList<SportCategory>) {
+        val adapter = SportCategoriesAdapter(userCategories)
         binding.rvSportCategories.layoutManager = LinearLayoutManager(requireContext())
         binding.rvSportCategories.adapter = adapter
     }
-
-    private fun addNewSportCategory() {
-        val currentUserProfile = userProfileViewModel.userProfile.value
-        if (currentUserProfile != null) {
-            val updatedSportCategories = currentUserProfile.sportCategories.toMutableList()
-            updatedSportCategories.add(SportCategory("", SkillLevel.Beginner))
-
-            val updatedUserProfile = currentUserProfile.copy(sportCategories = updatedSportCategories)
-
-            // Use the new method here
-            userProfileViewModel.updateLocalUserProfile(updatedUserProfile)
-
-            (binding.rvSportCategories.adapter as? SportCategoriesAdapter)?.notifyDataSetChanged()
-        }
-    }
-
-
 }
 
 

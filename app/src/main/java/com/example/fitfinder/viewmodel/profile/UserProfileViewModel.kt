@@ -25,7 +25,7 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
                             name = categoryMap["name"] ?: "",
                             skillLevel = SkillLevel.valueOf(categoryMap["skillLevel"] ?: "")
                         )
-                    } ?: listOf(),
+                    } ?.toMutableList() ?: mutableListOf(),
                     workoutTimes = (it["workoutTimes"] as? List<String>)?.map { WorkoutTime.valueOf(it) } ?: listOf(),
                     description = it["description"] as? String
                 )
