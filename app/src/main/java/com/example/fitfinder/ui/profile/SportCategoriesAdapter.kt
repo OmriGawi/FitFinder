@@ -1,5 +1,6 @@
 package com.example.fitfinder.ui.profile
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +18,6 @@ class SportCategoriesAdapter(
         }
     }
 
-
     override fun onBindViewHolder(holder: SportCategoryViewHolder, position: Int) {
         val sportCategory = userSportCategories[position]
         holder.bind(sportCategory.name, sportCategory.skillLevel)
@@ -29,5 +29,13 @@ class SportCategoriesAdapter(
         userSportCategories.removeAt(position)
         notifyItemRemoved(position)
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setData(newData: List<SportCategory>) {
+        userSportCategories.clear()
+        userSportCategories.addAll(newData)
+        notifyDataSetChanged()
+    }
+
 }
 

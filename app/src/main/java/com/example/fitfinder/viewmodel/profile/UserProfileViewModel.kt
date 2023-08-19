@@ -34,14 +34,14 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         }
     }
 
+    fun addSportCategory(sportCategory: SportCategory) {
+        val currentProfile = _userProfile.value
+        currentProfile?.sportCategories?.add(0, sportCategory)  // 0 : to the beginning of the list
+        _userProfile.postValue(currentProfile)
+    }
 
     fun updateUserProfile(userId: String, userProfile: UserProfile) {
         repository.updateUserProfile(userId, userProfile)
-    }
-
-    // Add this function:
-    fun updateLocalUserProfile(updatedProfile: UserProfile) {
-        _userProfile.value = updatedProfile
     }
 
 }

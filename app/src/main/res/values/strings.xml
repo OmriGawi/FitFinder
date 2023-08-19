@@ -36,5 +36,9 @@
     <string name="write_a_description_here">Write a description here…</string>
     <string name="save">Save</string>
     <string name="iv_add_description">iv_add_description</string>
+    <string name="add_sport_category">Add Sport Category</string>
+    <string name="select_sport_category">Select Sport Category</string>
+    <string name="select_skill_level">Select Skill Level</string>
+    <string name="add">Add</string>
 
 </resources>
