@@ -13,25 +13,38 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
 
     fun fetchUserProfile(userId: String) {
         repository.getUserProfile(userId).addOnSuccessListener { document ->
-            val userProfileMap = document.get("userProfile") as? Map<String, Any>
-            val profile = userProfileMap?.let {
-                UserProfile(
-                    userId = userId,
-                    userType = UserType.valueOf(it["userType"] as? String ?: ""),
-                    profilePictureUrl = it["profilePictureUrl"] as? String,
-                    additionalPictures = (it["additionalPictures"] as? List<String>) ?: listOf(),
-                    sportCategories = (it["sportCategories"] as? List<Map<String, String>>)?.map { categoryMap ->
-                        SportCategory(
-                            name = categoryMap["name"] ?: "",
-                            skillLevel = SkillLevel.valueOf(categoryMap["skillLevel"] ?: "")
-                        )
-                    } ?.toMutableList() ?: mutableListOf(),
-                    workoutTimes = (it["workoutTimes"] as? List<String>)?.map { WorkoutTime.valueOf(it) } ?: listOf(),
-                    description = it["description"] as? String
-                )
+            val userProfileMap = document.get("userProfile") as? MutableMap<String, Any>
+
+            if (userProfileMap?.get("profilePictureUrl") == "") {
+                // If Firestore does not have the URL, fetch default one from Firebase Storage
+                repository.getDefaultProfilePictureUrl().addOnSuccessListener { defaultUrl ->
+                    userProfileMap["profilePictureUrl"] = defaultUrl.toString()
+                    createUserProfile(userProfileMap, userId)
+                }
+            } else {
+                createUserProfile(userProfileMap, userId)
             }
-            _userProfile.postValue(profile)
         }
+    }
+
+    private fun createUserProfile(userProfileMap: MutableMap<String, Any>?, userId: String) {
+        val profile = userProfileMap?.let {
+            UserProfile(
+                userId = userId,
+                userType = UserType.valueOf(it["userType"] as? String ?: ""),
+                profilePictureUrl = it["profilePictureUrl"] as? String,
+                additionalPictures = (it["additionalPictures"] as? MutableList<String>) ?: mutableListOf(),
+                sportCategories = (it["sportCategories"] as? List<Map<String, String>>)?.map { categoryMap ->
+                    SportCategory(
+                        name = categoryMap["name"] ?: "",
+                        skillLevel = SkillLevel.valueOf(categoryMap["skillLevel"] ?: "")
+                    )
+                } ?.toMutableList() ?: mutableListOf(),
+                workoutTimes = (it["workoutTimes"] as? List<String>)?.map { WorkoutTime.valueOf(it) } ?: listOf(),
+                description = it["description"] as? String
+            )
+        }
+        _userProfile.postValue(profile)
     }
 
     fun addSportCategory(sportCategory: SportCategory) {

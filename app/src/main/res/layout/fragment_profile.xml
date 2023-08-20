@@ -15,52 +15,58 @@
         <!-- Top View Profile, ImageView, Edit Pictures Section -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="180dp"
             android:gravity="center">
 
             <!-- Image View -->
             <ImageView
                 android:id="@+id/iv_profile"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:contentDescription="iv_profile_description"
+                tools:ignore="HardcodedText" />
 
-            <!-- View Profile Button -->
-            <Button
-                android:id="@+id/btn_viewProfile"
-                android:layout_width="140dp"
-                android:layout_height="35dp"
+            <!-- Edit Profile Picture TextView -->
+            <TextView
+                android:id="@+id/tv_editProfilePicture"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/poppinssemibold"
-                android:background="@drawable/btn_shape_app"
-                app:backgroundTint="@null"
-                android:text="@string/view_profile"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:text="@string/edit_profile_picture"
+                android:textColor="@color/black"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/iv_profile"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginEnd="10dp" />
-
-            <!-- Edit Pictures Button -->
-            <Button
-                android:id="@+id/btn_editPictures"
-                android:layout_width="140dp"
-                android:layout_height="35dp"
-                android:background="@drawable/btn_shape_app"
-                app:backgroundTint="@null"
-                android:fontFamily="@font/poppinssemibold"
-                android:text="@string/edit_pictures"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="14sp"
+                android:drawablePadding="8dp"
+                android:padding="10dp"
+                app:layout_constraintTop_toTopOf="@+id/iv_profile"
+                app:layout_constraintBottom_toTopOf="@+id/tv_viewProfile"
                 app:layout_constraintStart_toEndOf="@+id/iv_profile"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginStart="10dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:drawableStartCompat="@drawable/ic_image" />
+
+            <!-- View Profile TextView -->
+            <TextView
+                android:id="@+id/tv_viewProfile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinssemibold"
+                android:text="@string/view_profile"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:padding="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_editProfilePicture"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
+                app:layout_constraintStart_toEndOf="@+id/iv_profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:drawableStartCompat="@drawable/ic_profile"
+                android:drawablePadding="8dp"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -198,7 +204,8 @@
                 android:minLines="3"
                 android:maxLines="3"
                 android:fontFamily="@font/poppinsregular"
-                android:background="#D9D9D9"/>
+                android:background="#D9D9D9"
+                android:autofillHints="" />
 
             <!-- Save Button -->
             <Button
