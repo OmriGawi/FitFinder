@@ -1,15 +1,22 @@
 package com.example.fitfinder.viewmodel.profile
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fitfinder.data.model.*
 import com.example.fitfinder.data.repository.profile.UserProfileRepository
+import com.example.fitfinder.util.Event
+import com.example.fitfinder.util.ToastyType
 
 class UserProfileViewModel(private val repository: UserProfileRepository) : ViewModel() {
 
+    // Variables
     private val _userProfile = MutableLiveData<UserProfile>()
     val userProfile: LiveData<UserProfile> get() = _userProfile
+
+    private val _toastMessageEvent = MutableLiveData<Event<Pair<String, ToastyType>>>()
+    val toastMessageEvent: LiveData<Event<Pair<String, ToastyType>>> get() = _toastMessageEvent
 
     fun fetchUserProfile(userId: String) {
         repository.getUserProfile(userId).addOnSuccessListener { document ->
@@ -47,6 +54,20 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         _userProfile.postValue(profile)
     }
 
+    fun updateProfilePictureUrl(userId: String, uri: Uri) {
+        // Start by uploading the image to Firebase Storage
+        repository.uploadProfilePicture(userId, uri).addOnSuccessListener { downloadUri ->
+            // After successful upload, update the userProfile with the new URL
+            val currentProfile = _userProfile.value
+            currentProfile?.profilePictureUrl = downloadUri.toString()
+            _userProfile.postValue(currentProfile)
+            _toastMessageEvent.postValue(Event(Pair("Image uploaded successfully!", ToastyType.SUCCESS)))
+        }.addOnFailureListener {
+            // Notify the user of the error
+            _toastMessageEvent.postValue(Event(Pair("Failed to upload the image.", ToastyType.ERROR)))
+        }
+    }
+
     fun addSportCategory(sportCategory: SportCategory) {
         val currentProfile = _userProfile.value
         currentProfile?.sportCategories?.add(0, sportCategory)  // 0 : to the beginning of the list
@@ -56,5 +77,4 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
     fun updateUserProfile(userId: String, userProfile: UserProfile) {
         repository.updateUserProfile(userId, userProfile)
     }
-
 }

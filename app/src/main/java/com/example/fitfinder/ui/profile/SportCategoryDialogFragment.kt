@@ -76,6 +76,7 @@ class SportCategoryDialogFragment : DialogFragment() {
             if (selectedCategory.isEmpty() || selectedSkillLevelString.isEmpty()) {
                 // Show Toasty message if either dropdown is not selected
                 Toasty.warning(requireContext(), "Please select both category and skill level.", Toasty.LENGTH_SHORT, true).show()
+
             } else {
                 // If both are selected, proceed as before
                 val selectedSkillLevel = SkillLevel.valueOf(selectedSkillLevelString)

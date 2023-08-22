@@ -24,6 +24,16 @@ class UserProfileRepository: BaseRepository() {
         return defaultImageRef.downloadUrl
     }
 
+    fun uploadProfilePicture(userId: String, uri: Uri): Task<Uri> {
+        val profilePicRef = storageRef.child("users/$userId/profilePictureUrl/${uri.lastPathSegment}")
+        return profilePicRef.putFile(uri).continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let { throw it }
+            }
+            return@continueWithTask profilePicRef.downloadUrl
+        }
+    }
+
     fun updateUserProfile(userId: String, userProfile: UserProfile): Task<Void> {
         // To update only the userProfile field, we use a map
         return firestore.collection("users").document(userId).update(mapOf("userProfile" to userProfile))

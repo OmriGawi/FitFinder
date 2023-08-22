@@ -1,12 +1,17 @@
 package com.example.fitfinder.ui.profile
 
 
+import android.app.Activity
+import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -15,22 +20,25 @@ import com.example.fitfinder.data.model.UserType
 import com.example.fitfinder.data.model.WorkoutTime
 import com.example.fitfinder.data.repository.profile.UserProfileRepository
 import com.example.fitfinder.databinding.FragmentProfileBinding
+import com.example.fitfinder.util.EventObserver
 import com.example.fitfinder.util.SharedPreferencesUtil
+import com.example.fitfinder.util.ToastyType
 import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.profile.UserProfileViewModel
+import es.dmoral.toasty.Toasty
 
 class ProfileFragment : Fragment(){
 
-    // bindings
+    // Bindings
     private lateinit var binding: FragmentProfileBinding
 
-    // view-model
+    // View-model
     private lateinit var userProfileViewModel: UserProfileViewModel
 
-    // variables
+    // Variables
     private lateinit var userId: String
 
-    // adapters
+    // Adapters
     private val sportCategoriesAdapter = SportCategoriesAdapter(mutableListOf())
 
 
@@ -51,9 +59,6 @@ class ProfileFragment : Fragment(){
 
         // Setup RecyclerView
         setupRecyclerView()
-
-        binding.rvSportCategories.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvSportCategories.adapter = sportCategoriesAdapter
 
         userProfileViewModel.userProfile.observe(viewLifecycleOwner) { userProfile ->
             userProfile?.let { profile ->
@@ -86,6 +91,22 @@ class ProfileFragment : Fragment(){
             }
         }
 
+        userProfileViewModel.toastMessageEvent.observe(viewLifecycleOwner, EventObserver { (message, type) ->
+            when (type) {
+                ToastyType.SUCCESS -> Toasty.success(requireContext(), message, Toasty.LENGTH_LONG, true).show()
+                ToastyType.ERROR -> Toasty.error(requireContext(), message, Toasty.LENGTH_SHORT, true).show()
+                else -> {    // Handle any unexpected cases or log them for debugging
+                    Log.e(TAG, "Unexpected ToastyType: $type")
+                }
+            }
+        })
+
+        binding.tvEditProfilePicture.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            pickImageContract.launch(intent)
+        }
+
         binding.ivAdd.setOnClickListener {
             val dialog = SportCategoryDialogFragment()
             dialog.show(parentFragmentManager, "SportCategoryDialog")
@@ -109,6 +130,13 @@ class ProfileFragment : Fragment(){
         binding.rvSportCategories.adapter = sportCategoriesAdapter
     }
 
+    private val pickImageContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.data?.let { uri ->
+                userProfileViewModel.updateProfilePictureUrl(userId, uri)
+            }
+        }
+    }
 }
 
 
