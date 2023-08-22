@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         // Set the initial title for the ActionBar
         supportActionBar?.title = getString(R.string.profile)
         // Set the first fragment to be displayed
-        replaceFragment(ProfileFragment())
+        replaceFragment(profileFragment)
 
         // Create an instance of AuthRepository (which is a type of BaseRepository)
         val authRepository = AuthRepository()

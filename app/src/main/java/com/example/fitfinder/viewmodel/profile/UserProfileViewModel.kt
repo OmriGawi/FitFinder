@@ -18,6 +18,9 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
     private val _toastMessageEvent = MutableLiveData<Event<Pair<String, ToastyType>>>()
     val toastMessageEvent: LiveData<Event<Pair<String, ToastyType>>> get() = _toastMessageEvent
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
     fun fetchUserProfile(userId: String) {
         repository.getUserProfile(userId).addOnSuccessListener { document ->
             val userProfileMap = document.get("userProfile") as? MutableMap<String, Any>
@@ -55,16 +58,19 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
     }
 
     fun updateProfilePictureUrl(userId: String, uri: Uri) {
-        // Start by uploading the image to Firebase Storage
+        _isLoading.postValue(true)  // Show the ProgressBar
+
         repository.uploadProfilePicture(userId, uri).addOnSuccessListener { downloadUri ->
             // After successful upload, update the userProfile with the new URL
             val currentProfile = _userProfile.value
             currentProfile?.profilePictureUrl = downloadUri.toString()
             _userProfile.postValue(currentProfile)
+            _isLoading.postValue(false)  // Hide the ProgressBar
             _toastMessageEvent.postValue(Event(Pair("Image uploaded successfully!", ToastyType.SUCCESS)))
         }.addOnFailureListener {
             // Notify the user of the error
             _toastMessageEvent.postValue(Event(Pair("Failed to upload the image.", ToastyType.ERROR)))
+            _isLoading.postValue(false)  // Hide the ProgressBar
         }
     }
 

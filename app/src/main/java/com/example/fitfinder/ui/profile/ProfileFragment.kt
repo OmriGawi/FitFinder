@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +38,7 @@ class ProfileFragment : Fragment(){
 
     // Variables
     private lateinit var userId: String
+    private lateinit var pickImageContract: ActivityResultLauncher<Intent>
 
     // Adapters
     private val sportCategoriesAdapter = SportCategoriesAdapter(mutableListOf())
@@ -59,6 +61,15 @@ class ProfileFragment : Fragment(){
 
         // Setup RecyclerView
         setupRecyclerView()
+
+        // Setup pickImageContract
+        pickImageContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.let { uri ->
+                    userProfileViewModel.updateProfilePictureUrl(userId, uri)
+                }
+            }
+        }
 
         userProfileViewModel.userProfile.observe(viewLifecycleOwner) { userProfile ->
             userProfile?.let { profile ->
@@ -101,6 +112,10 @@ class ProfileFragment : Fragment(){
             }
         })
 
+        userProfileViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.pbProfileUpload.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
         binding.tvEditProfilePicture.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
@@ -130,13 +145,6 @@ class ProfileFragment : Fragment(){
         binding.rvSportCategories.adapter = sportCategoriesAdapter
     }
 
-    private val pickImageContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { uri ->
-                userProfileViewModel.updateProfilePictureUrl(userId, uri)
-            }
-        }
-    }
 }
 
 
