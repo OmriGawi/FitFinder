@@ -29,7 +29,7 @@ import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.profile.UserProfileViewModel
 import es.dmoral.toasty.Toasty
 
-class ProfileFragment : Fragment(){
+class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedListener{
 
     // Bindings
     private lateinit var binding: FragmentProfileBinding
@@ -63,7 +63,7 @@ class ProfileFragment : Fragment(){
         userProfileViewModel.fetchUserProfile(userId)
 
         // Initialize Adapters
-        additionalPicturesAdapter = AdditionalPicturesAdapter(mutableListOf(), requireContext())
+        additionalPicturesAdapter = AdditionalPicturesAdapter(mutableListOf(), requireContext(), this)
 
         // Setup RecyclerView
         setupRecyclerView()
@@ -148,6 +148,10 @@ class ProfileFragment : Fragment(){
             intent.type = "image/*"
             pickImageContractAdditionalPicture.launch(intent)
         }
+
+        binding.ivEditAdditional.setOnClickListener {
+            additionalPicturesAdapter.toggleEditMode()
+        }
     }
 
     override fun onResume() {
@@ -170,6 +174,9 @@ class ProfileFragment : Fragment(){
         binding.rvAdditionalPictures.adapter = additionalPicturesAdapter
     }
 
+    override fun onImageRemoved(position: Int, imageUrl: String) {
+        userProfileViewModel.removeAdditionalPicture(imageUrl)
+    }
 }
 
 

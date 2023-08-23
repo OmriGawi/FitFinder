@@ -86,6 +86,12 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         }
     }
 
+    fun removeAdditionalPicture(imageUrl: String) {
+        val currentProfile = _userProfile.value
+        currentProfile?.additionalPictures?.remove(imageUrl)
+        _userProfile.postValue(currentProfile!!)
+    }
+
     fun addSportCategory(sportCategory: SportCategory) {
         val currentProfile = _userProfile.value
         currentProfile?.sportCategories?.add(0, sportCategory)  // 0 : to the beginning of the list

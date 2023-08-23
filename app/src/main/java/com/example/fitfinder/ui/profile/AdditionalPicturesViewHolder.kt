@@ -5,13 +5,23 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitfinder.R
 
-class AdditionalPicturesViewHolder(itemView: View, val onRemoveClick: (position: Int) -> Unit) : RecyclerView.ViewHolder(itemView) {
+class AdditionalPicturesViewHolder(
+    itemView: View,
+    private val listener: AdditionalPicturesAdapter.OnImageRemovedListener
+) : RecyclerView.ViewHolder(itemView) {
     val image: ImageView = itemView.findViewById(R.id.iv_additional)
-    //private val removeButton: ImageView = itemView.findViewById(R.id.iv_remove)  // Assuming you have an ImageView acting as a remove button
+    private val ivRemove: ImageView = itemView.findViewById(R.id.iv_remove)
 
-   /* init {
-        removeButton.setOnClickListener {
-            onRemoveClick(adapterPosition)
+    fun bind(imageUrl: String) {
+        ivRemove.setOnClickListener {
+            listener.onImageRemoved(adapterPosition, imageUrl)
         }
-    }*/
+    }
+
+    fun setEditMode(isEditMode: Boolean) {
+        ivRemove.visibility = if (isEditMode) View.VISIBLE else View.GONE
+    }
 }
+
+
+

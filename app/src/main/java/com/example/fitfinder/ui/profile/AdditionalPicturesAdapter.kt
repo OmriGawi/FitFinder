@@ -11,16 +11,21 @@ import com.example.fitfinder.R
 
 class AdditionalPicturesAdapter(
     private val imageList: MutableList<String>,
-    private val context: Context
+    private val context: Context,
+    private val listener: OnImageRemovedListener
 ) : RecyclerView.Adapter<AdditionalPicturesViewHolder>() {
 
-    @SuppressLint("NotifyDataSetChanged")
+    // Interface Callback
+    interface OnImageRemovedListener {
+        fun onImageRemoved(position: Int, imageUrl: String)
+    }
+
+    // Variables
+    private var isEditMode = false
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdditionalPicturesViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_profile_additional_pictures, parent, false)
-        return AdditionalPicturesViewHolder(view) { position ->
-            imageList.removeAt(position)
-            notifyDataSetChanged()
-        }
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_profile_additional_pictures, parent, false)
+        return AdditionalPicturesViewHolder(itemView, listener)
     }
 
     override fun onBindViewHolder(holder: AdditionalPicturesViewHolder, position: Int) {
@@ -28,6 +33,15 @@ class AdditionalPicturesAdapter(
         Glide.with(context)
             .load(imageUrl)
             .into(holder.image)
+        holder.bind(imageUrl)
+        holder.setEditMode(isEditMode)
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun toggleEditMode() {
+        isEditMode = !isEditMode
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = imageList.size

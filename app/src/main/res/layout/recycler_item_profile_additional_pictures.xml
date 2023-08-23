@@ -17,6 +17,15 @@
         android:scaleType="centerCrop"
         tools:ignore="HardcodedText" />
 
+    <ImageView
+        android:id="@+id/iv_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:src="@drawable/ic_remove_red"
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
+
     <!-- Can also add progress bar here if needed -->
 
 </androidx.cardview.widget.CardView>
