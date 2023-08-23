@@ -54,7 +54,7 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
                 description = it["description"] as? String
             )
         }
-        _userProfile.postValue(profile)
+        _userProfile.postValue(profile!!)
     }
 
     fun updateProfilePictureUrl(userId: String, uri: Uri) {
@@ -64,7 +64,7 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
             // After successful upload, update the userProfile with the new URL
             val currentProfile = _userProfile.value
             currentProfile?.profilePictureUrl = downloadUri.toString()
-            _userProfile.postValue(currentProfile)
+            _userProfile.postValue(currentProfile!!)
             _isLoading.postValue(false)  // Hide the ProgressBar
             _toastMessageEvent.postValue(Event(Pair("Image uploaded successfully!", ToastyType.SUCCESS)))
         }.addOnFailureListener {
@@ -77,7 +77,7 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
     fun addSportCategory(sportCategory: SportCategory) {
         val currentProfile = _userProfile.value
         currentProfile?.sportCategories?.add(0, sportCategory)  // 0 : to the beginning of the list
-        _userProfile.postValue(currentProfile)
+        _userProfile.postValue(currentProfile!!)
     }
 
     fun updateUserProfile(userId: String, userProfile: UserProfile) {
