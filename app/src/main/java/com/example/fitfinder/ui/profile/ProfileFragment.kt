@@ -138,6 +138,11 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
             pickImageContractProfilePicture.launch(intent)
         }
 
+        binding.autoCompleteTextViewUserType.setOnItemClickListener { _, _, position, _ ->
+            val selectedUserType = UserType.values()[position]
+            userProfileViewModel.updateUserType(selectedUserType)
+        }
+
         binding.ivAdd.setOnClickListener {
             val dialog = SportCategoryDialogFragment()
             dialog.show(parentFragmentManager, "SportCategoryDialog")

@@ -74,6 +74,13 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         }
     }
 
+    fun updateUserType(userType: UserType) {
+        val currentProfile = _userProfile.value
+        currentProfile?.userType = userType
+        _userProfile.postValue(currentProfile!!)
+    }
+
+
     fun addAdditionalPicture(userId: String, uri: Uri) {
         repository.uploadAdditionalPicture(userId, uri).addOnSuccessListener { downloadUri ->
             val currentProfile = _userProfile.value

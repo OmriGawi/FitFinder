@@ -2,7 +2,7 @@ package com.example.fitfinder.data.model
 
 data class UserProfile(
     val userId: String,
-    val userType: UserType,
+    var userType: UserType,
     var profilePictureUrl: String?,
     val additionalPictures: MutableList<String>,
     val sportCategories: MutableList<SportCategory>,
