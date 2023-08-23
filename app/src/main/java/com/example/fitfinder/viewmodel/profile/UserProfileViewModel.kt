@@ -74,6 +74,18 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         }
     }
 
+    fun addAdditionalPicture(userId: String, uri: Uri) {
+        repository.uploadAdditionalPicture(userId, uri).addOnSuccessListener { downloadUri ->
+            val currentProfile = _userProfile.value
+            currentProfile?.additionalPictures?.add(downloadUri.toString()) // 0 : to the beginning of the list
+            _userProfile.postValue(currentProfile!!)
+            _toastMessageEvent.postValue(Event(Pair("Additional Image uploaded successfully!", ToastyType.SUCCESS)))
+        }.addOnFailureListener {
+            // Notify the user of the error
+            _toastMessageEvent.postValue(Event(Pair("Failed to upload the additional image.", ToastyType.ERROR)))
+        }
+    }
+
     fun addSportCategory(sportCategory: SportCategory) {
         val currentProfile = _userProfile.value
         currentProfile?.sportCategories?.add(0, sportCategory)  // 0 : to the beginning of the list

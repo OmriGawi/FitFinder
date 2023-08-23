@@ -40,5 +40,6 @@
     <string name="add">Add</string>
     <string name="edit_picture"><u>Edit Picture</u></string>
     <string name="view_profile"><u>View Profile</u></string>
+    <string name="additional_pictures">Additional Pictures</string>
 
 </resources>

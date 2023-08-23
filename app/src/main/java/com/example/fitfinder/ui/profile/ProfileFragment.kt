@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.fitfinder.R
@@ -38,10 +39,12 @@ class ProfileFragment : Fragment(){
 
     // Variables
     private lateinit var userId: String
-    private lateinit var pickImageContract: ActivityResultLauncher<Intent>
+    private lateinit var pickImageContractProfilePicture: ActivityResultLauncher<Intent>
+    private lateinit var pickImageContractAdditionalPicture: ActivityResultLauncher<Intent>
 
     // Adapters
     private val sportCategoriesAdapter = SportCategoriesAdapter(mutableListOf())
+    private lateinit var additionalPicturesAdapter: AdditionalPicturesAdapter
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -59,18 +62,29 @@ class ProfileFragment : Fragment(){
         userId = SharedPreferencesUtil.getUserId(requireContext()).toString()
         userProfileViewModel.fetchUserProfile(userId)
 
+        // Initialize Adapters
+        additionalPicturesAdapter = AdditionalPicturesAdapter(mutableListOf(), requireContext())
+
         // Setup RecyclerView
         setupRecyclerView()
 
         // Setup pickImageContract
-        pickImageContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        pickImageContractProfilePicture = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let { uri ->
                     userProfileViewModel.updateProfilePictureUrl(userId, uri)
                 }
             }
         }
+        pickImageContractAdditionalPicture = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.let { uri ->
+                    userProfileViewModel.addAdditionalPicture(userId, uri)
+                }
+            }
+        }
 
+        // Observe changes in ViewModel
         userProfileViewModel.userProfile.observe(viewLifecycleOwner) { userProfile ->
             userProfile?.let { profile ->
                 // Set the Profile Picture
@@ -91,6 +105,8 @@ class ProfileFragment : Fragment(){
 
                 // Set the sportCategories RecyclerView
                 sportCategoriesAdapter.setData(profile.sportCategories)
+                // Set the Additional Pictures RecyclerView
+                additionalPicturesAdapter.setData(profile.additionalPictures)
 
                 // Set the About Me (description)
                 profile.description?.let { description ->
@@ -98,7 +114,6 @@ class ProfileFragment : Fragment(){
                         binding.etDescription.setText(description)
                     }
                 }
-
             }
         }
 
@@ -116,15 +131,22 @@ class ProfileFragment : Fragment(){
             binding.pbProfileUpload.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
+        // Listeners
         binding.tvEditProfilePicture.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
-            pickImageContract.launch(intent)
+            pickImageContractProfilePicture.launch(intent)
         }
 
         binding.ivAdd.setOnClickListener {
             val dialog = SportCategoryDialogFragment()
             dialog.show(parentFragmentManager, "SportCategoryDialog")
+        }
+
+        binding.ivAddAdditional.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            pickImageContractAdditionalPicture.launch(intent)
         }
     }
 
@@ -143,6 +165,9 @@ class ProfileFragment : Fragment(){
     private fun setupRecyclerView() {
         binding.rvSportCategories.layoutManager = LinearLayoutManager(requireContext())
         binding.rvSportCategories.adapter = sportCategoriesAdapter
+
+        binding.rvAdditionalPictures.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.rvAdditionalPictures.adapter = additionalPicturesAdapter
     }
 
 }
