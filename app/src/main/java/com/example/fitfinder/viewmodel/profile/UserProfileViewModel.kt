@@ -50,7 +50,7 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
                         skillLevel = SkillLevel.valueOf(categoryMap["skillLevel"] ?: "")
                     )
                 } ?.toMutableList() ?: mutableListOf(),
-                workoutTimes = (it["workoutTimes"] as? List<String>)?.map { WorkoutTime.valueOf(it) } ?: listOf(),
+                workoutTimes = (it["workoutTimes"] as? List<String>)?.map { WorkoutTime.valueOf(it) }?.toMutableList() ?: mutableListOf(),
                 description = it["description"] as? String
             )
         }
@@ -80,6 +80,12 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         _userProfile.postValue(currentProfile!!)
     }
 
+    fun updateWorkoutTimes(updatedWorkoutTimes: MutableList<WorkoutTime>) {
+        val currentProfile = _userProfile.value
+        currentProfile?.workoutTimes?.clear()
+        currentProfile?.workoutTimes?.addAll(updatedWorkoutTimes)
+        _userProfile.postValue(currentProfile!!)
+    }
 
     fun addAdditionalPicture(userId: String, uri: Uri) {
         repository.uploadAdditionalPicture(userId, uri).addOnSuccessListener { downloadUri ->

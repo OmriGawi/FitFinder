@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,6 +28,7 @@ import com.example.fitfinder.util.SharedPreferencesUtil
 import com.example.fitfinder.util.ToastyType
 import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.profile.UserProfileViewModel
+import com.zeeshan.material.multiselectionspinner.MultiSelectionSpinner
 import es.dmoral.toasty.Toasty
 
 class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedListener{
@@ -142,6 +144,24 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
             val selectedUserType = UserType.values()[position]
             userProfileViewModel.updateUserType(selectedUserType)
         }
+
+        binding.multiSelectionWorkoutTimes.setOnItemSelectedListener(object: MultiSelectionSpinner.OnItemSelectedListener {
+
+            override fun onItemSelected(view: View, isSelected: Boolean, position: Int) {
+                // Whenever an item is selected or deselected, get all currently selected items
+                val selectedWorkoutTimes = binding.multiSelectionWorkoutTimes.selectedItems.map {
+                    WorkoutTime.valueOf(it.toString())
+                }.toMutableList()
+
+                // Update the ViewModel with the new list
+                userProfileViewModel.updateWorkoutTimes(selectedWorkoutTimes)
+            }
+
+            override fun onSelectionCleared() {
+                // When all selections are cleared, send an empty list to the ViewModel
+                userProfileViewModel.updateWorkoutTimes(mutableListOf())
+            }
+        })
 
         binding.ivAdd.setOnClickListener {
             val dialog = SportCategoryDialogFragment()
