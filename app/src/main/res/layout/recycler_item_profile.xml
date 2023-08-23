@@ -10,7 +10,8 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="30dp"
-        android:fontFamily="@font/poppinsregular"
+        android:fontFamily="@font/poppinsmedium"
+        android:textColor="@color/black"
         android:padding="5dp"/>
 
     <!-- Skill Level Display -->
@@ -19,7 +20,8 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="30dp"
-        android:fontFamily="@font/poppinsregular"
+        android:fontFamily="@font/poppinsmedium"
+        android:textColor="@color/black"
         android:padding="5dp"/>
 
     <!-- Remove Icon -->
