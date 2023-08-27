@@ -7,5 +7,5 @@ data class UserProfile(
     val additionalPictures: MutableList<String>,
     val sportCategories: MutableList<SportCategory>,
     val workoutTimes: MutableList<WorkoutTime>,
-    val description: String?
+    var description: String?
 )

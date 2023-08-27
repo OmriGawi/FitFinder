@@ -169,6 +169,13 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
             dialog.show(parentFragmentManager, "SportCategoryDialog")
         }
 
+        binding.etDescription.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                userProfileViewModel.updateUserDescription(binding.etDescription.text.toString())
+            }
+        }
+
+
         binding.ivAddAdditional.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
@@ -211,7 +218,6 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
         binding.rvAdditionalPictures.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.rvAdditionalPictures.adapter = additionalPicturesAdapter
     }
-
 }
 
 
