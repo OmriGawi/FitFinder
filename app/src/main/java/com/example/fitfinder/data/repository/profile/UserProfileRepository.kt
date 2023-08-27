@@ -45,8 +45,24 @@ class UserProfileRepository: BaseRepository() {
     }
 
     fun updateUserProfile(userId: String, userProfile: UserProfile): Task<Void> {
-        // To update only the userProfile field, we use a map
-        return firestore.collection("users").document(userId).update(mapOf("userProfile" to userProfile))
+        val userProfileMap = userProfileToMap(userProfile)
+        return firestore.collection("users").document(userId).update("userProfile", userProfileMap)
+    }
+
+    private fun userProfileToMap(userProfile: UserProfile): Map<String, Any?> {
+        return mapOf(
+            "additionalPictures" to userProfile.additionalPictures,
+            "description" to userProfile.description,
+            "profilePictureUrl" to userProfile.profilePictureUrl,
+            "sportCategories" to userProfile.sportCategories.map {
+                mapOf(
+                    "name" to it.name,
+                    "skillLevel" to it.skillLevel.name
+                )
+            },
+            "userType" to userProfile.userType.name,
+            "workoutTimes" to userProfile.workoutTimes.map { it.name }
+        )
     }
 }
 

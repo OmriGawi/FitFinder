@@ -117,7 +117,12 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         _userProfile.postValue(currentProfile!!)
     }
 
-    fun updateUserProfile(userId: String, userProfile: UserProfile) {
-        repository.updateUserProfile(userId, userProfile)
+    //TODO: update description to viewmodel
+
+    fun updateUserProfile(userId: String) {
+        _userProfile.value?.let {
+            repository.updateUserProfile(userId, it)
+        }
     }
+
 }

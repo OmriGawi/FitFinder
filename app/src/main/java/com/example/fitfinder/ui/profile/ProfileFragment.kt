@@ -178,6 +178,10 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
         binding.ivEditAdditional.setOnClickListener {
             additionalPicturesAdapter.toggleEditMode()
         }
+
+        binding.btnSave.setOnClickListener {
+            userProfileViewModel.updateUserProfile(userId)
+        }
     }
 
     override fun onResume() {
