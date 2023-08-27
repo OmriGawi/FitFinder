@@ -23,12 +23,16 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
 
     fun fetchUserProfile(userId: String) {
         repository.getUserProfile(userId).addOnSuccessListener { document ->
-            val userProfileMap = document.get("userProfile") as? MutableMap<String, Any>
+            var userProfileMap = document.get("userProfile") as? MutableMap<String, Any>
 
-            if (userProfileMap?.get("profilePictureUrl") == "") {
-                // If Firestore does not have the URL, fetch default one from Firebase Storage
+            // If userProfileMap is null (i.e., no user profile exists) or the profilePictureUrl field is missing or empty
+            if (userProfileMap == null || userProfileMap["profilePictureUrl"] == "") {
+                // Fetch default profile picture URL from Firebase Storage
                 repository.getDefaultProfilePictureUrl().addOnSuccessListener { defaultUrl ->
-                    userProfileMap["profilePictureUrl"] = defaultUrl.toString()
+                    if (userProfileMap == null) {
+                        userProfileMap = mutableMapOf()
+                    }
+                    userProfileMap!!["profilePictureUrl"] = defaultUrl.toString()
                     createUserProfile(userProfileMap, userId)
                 }
             } else {
@@ -37,24 +41,23 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         }
     }
 
+
     private fun createUserProfile(userProfileMap: MutableMap<String, Any>?, userId: String) {
-        val profile = userProfileMap?.let {
-            UserProfile(
-                userId = userId,
-                userType = UserType.valueOf(it["userType"] as? String ?: ""),
-                profilePictureUrl = it["profilePictureUrl"] as? String,
-                additionalPictures = (it["additionalPictures"] as? MutableList<String>) ?: mutableListOf(),
-                sportCategories = (it["sportCategories"] as? List<Map<String, String>>)?.map { categoryMap ->
-                    SportCategory(
-                        name = categoryMap["name"] ?: "",
-                        skillLevel = SkillLevel.valueOf(categoryMap["skillLevel"] ?: "")
-                    )
-                } ?.toMutableList() ?: mutableListOf(),
-                workoutTimes = (it["workoutTimes"] as? List<String>)?.map { WorkoutTime.valueOf(it) }?.toMutableList() ?: mutableListOf(),
-                description = it["description"] as? String
-            )
-        }
-        _userProfile.postValue(profile!!)
+        val profile = UserProfile(
+            userId = userId,
+            userType = UserType.fromString(userProfileMap?.get("userType") as? String ?: "") ?: UserType.Trainee, // default to Trainee if not found
+            profilePictureUrl = userProfileMap?.get("profilePictureUrl") as? String ?: "",
+            additionalPictures = userProfileMap?.get("additionalPictures") as? MutableList<String> ?: mutableListOf(),
+            sportCategories = (userProfileMap?.get("sportCategories") as? List<Map<String, String>>)?.map { categoryMap ->
+                SportCategory(
+                    name = categoryMap["name"] ?: "",
+                    skillLevel = SkillLevel.valueOf(categoryMap["skillLevel"] ?: "")
+                )
+            } ?.toMutableList() ?: mutableListOf(),
+            workoutTimes = (userProfileMap?.get("workoutTimes") as? List<String>)?.mapNotNull { WorkoutTime.fromString(it) }?.toMutableList() ?: mutableListOf(),
+            description = userProfileMap?.get("description") as? String ?: ""
+        )
+        _userProfile.postValue(profile)
     }
 
     fun updateProfilePictureUrl(userId: String, uri: Uri) {
@@ -126,7 +129,14 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
     fun updateUserProfile(userId: String) {
         _userProfile.value?.let {
             repository.updateUserProfile(userId, it)
+                .addOnSuccessListener {
+                    _toastMessageEvent.postValue(Event(Pair("Profile updated successfully!", ToastyType.SUCCESS)))
+                }
+                .addOnFailureListener {
+                    _toastMessageEvent.postValue(Event(Pair("Failed to update profile.", ToastyType.ERROR)))
+                }
         }
     }
+
 
 }
