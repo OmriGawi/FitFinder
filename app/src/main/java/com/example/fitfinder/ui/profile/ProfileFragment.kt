@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.fitfinder.R
+import com.example.fitfinder.data.model.SportCategory
 import com.example.fitfinder.data.model.UserType
 import com.example.fitfinder.data.model.WorkoutTime
 import com.example.fitfinder.data.repository.profile.UserProfileRepository
@@ -31,7 +31,7 @@ import com.example.fitfinder.viewmodel.profile.UserProfileViewModel
 import com.zeeshan.material.multiselectionspinner.MultiSelectionSpinner
 import es.dmoral.toasty.Toasty
 
-class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedListener{
+class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedListener, SportCategoriesAdapter.OnSportCategoryRemovedListener{
 
     // Bindings
     private lateinit var binding: FragmentProfileBinding
@@ -45,8 +45,8 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
     private lateinit var pickImageContractAdditionalPicture: ActivityResultLauncher<Intent>
 
     // Adapters
-    private val sportCategoriesAdapter = SportCategoriesAdapter(mutableListOf())
     private lateinit var additionalPicturesAdapter: AdditionalPicturesAdapter
+    private lateinit var sportCategoriesAdapter: SportCategoriesAdapter
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -66,6 +66,7 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
 
         // Initialize Adapters
         additionalPicturesAdapter = AdditionalPicturesAdapter(mutableListOf(), requireContext(), this)
+        sportCategoriesAdapter = SportCategoriesAdapter(mutableListOf(),this)
 
         // Setup RecyclerView
         setupRecyclerView()
@@ -191,6 +192,14 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
         binding.multiSelectionWorkoutTimes.items = workoutTimes
     }
 
+    override fun onImageRemoved(position: Int, imageUrl: String) {
+        userProfileViewModel.removeAdditionalPicture(imageUrl)
+    }
+
+    override fun onSportCategoryRemoved(position: Int, sportCategory: SportCategory) {
+        userProfileViewModel.removeSportCategory(sportCategory)
+    }
+
     private fun setupRecyclerView() {
         binding.rvSportCategories.layoutManager = LinearLayoutManager(requireContext())
         binding.rvSportCategories.adapter = sportCategoriesAdapter
@@ -199,9 +208,6 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
         binding.rvAdditionalPictures.adapter = additionalPicturesAdapter
     }
 
-    override fun onImageRemoved(position: Int, imageUrl: String) {
-        userProfileViewModel.removeAdditionalPicture(imageUrl)
-    }
 }
 
 

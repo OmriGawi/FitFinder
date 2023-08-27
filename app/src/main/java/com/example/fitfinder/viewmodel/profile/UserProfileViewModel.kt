@@ -111,6 +111,12 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         _userProfile.postValue(currentProfile!!)
     }
 
+    fun removeSportCategory(sportCategory: SportCategory) {
+        val currentProfile = _userProfile.value
+        currentProfile?.sportCategories?.remove(sportCategory)
+        _userProfile.postValue(currentProfile!!)
+    }
+
     fun updateUserProfile(userId: String, userProfile: UserProfile) {
         repository.updateUserProfile(userId, userProfile)
     }
