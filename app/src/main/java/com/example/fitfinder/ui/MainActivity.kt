@@ -3,6 +3,7 @@ package com.example.fitfinder.ui
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.fitfinder.R
 import com.example.fitfinder.data.repository.auth.AuthRepository
+import com.example.fitfinder.data.repository.location.LocationRepository
 import com.example.fitfinder.databinding.ActivityMainBinding
 import com.example.fitfinder.ui.auth.LoginActivity
 import com.example.fitfinder.ui.calendar.CalendarFragment
@@ -22,8 +24,11 @@ import com.example.fitfinder.ui.exercise.ExerciseFragment
 import com.example.fitfinder.ui.messages.MessagesFragment
 import com.example.fitfinder.ui.profile.ProfileFragment
 import com.example.fitfinder.ui.search.SearchFragment
+import com.example.fitfinder.util.LocationUtil
+import com.example.fitfinder.util.SharedPreferencesUtil
 import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.auth.LogoutViewModel
+import com.example.fitfinder.viewmodel.location.LocationViewModel
 import es.dmoral.toasty.Toasty
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     // view-model
     private lateinit var logoutViewModel: LogoutViewModel
+    private lateinit var locationViewModel: LocationViewModel
 
     // Fragments
     private val profileFragment by lazy { ProfileFragment() }
@@ -52,11 +58,9 @@ class MainActivity : AppCompatActivity() {
         // Set the first fragment to be displayed
         replaceFragment(profileFragment)
 
-        // Create an instance of AuthRepository (which is a type of BaseRepository)
-        val authRepository = AuthRepository()
-        // Create an instance of AuthViewModel and pass the repository to it
-        val viewModelFactory = ViewModelFactory(authRepository)
-        logoutViewModel = ViewModelProvider(this, viewModelFactory)[LogoutViewModel::class.java]
+        // Initialize view models
+        logoutViewModel = ViewModelProvider(this, ViewModelFactory(AuthRepository()))[LogoutViewModel::class.java]
+        locationViewModel = ViewModelProvider(this, ViewModelFactory(LocationRepository()))[LocationViewModel::class.java]
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             val title: String = when(it.itemId) {
@@ -103,6 +107,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Fetch and update location
+        LocationUtil.getCurrentLocation(this, object : LocationUtil.LocationCallback {
+            override fun onLocationResult(location: Location?) {
+                location?.let {
+                    val userId = SharedPreferencesUtil.getUserId(this@MainActivity) ?: return
+                    locationViewModel.updateUserLocation(userId, it)
+                }
+            }
+        })
+
+        //TODO: Do something if the use not approving the location permissions...
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
