@@ -41,5 +41,10 @@
     <string name="edit_picture"><u>Edit Picture</u></string>
     <string name="view_profile"><u>View Profile</u></string>
     <string name="additional_pictures">Additional Pictures</string>
+    <string name="select_radius">Select Radius</string>
+    <string name="select_workout_times">Select Workout Times</string>
+    <string name="sport_category">Sport Category</string>
+    <string name="skill_level">Skill Level</string>
+    <string name="radius">Radius</string>
 
 </resources>

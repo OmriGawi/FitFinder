@@ -6,5 +6,135 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".ui.search.SearchFragment"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select the fields below to search for potential users."
+            android:background="@color/background_text_headline"
+            android:fontFamily="@font/poppinsbold"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"/>
+
+        <!-- Sport Category Dropdown -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_sportCategory"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/sport_category"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_addSportCategory">
+
+            <AutoCompleteTextView
+                android:id="@+id/ac_sportCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppinssemibold"
+                tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Skill Level Dropdown -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_skillLevel"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/skill_level"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_sportCategory">
+
+            <AutoCompleteTextView
+                android:id="@+id/ac_skillLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppinssemibold"
+                tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Workout Time Dropdown - Replaced with MultiSelectionSpinner -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/workout_times">
+
+            <com.zeeshan.material.multiselectionspinner.MultiSelectionSpinner
+                android:id="@+id/multiSelection_workoutTimes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@font/poppinssemibold"
+                android:importantForAutofill="no"
+                android:inputType="none"
+                android:maxLines="1"
+                android:textSize="14sp"
+                app:showSearch="false"
+                app:sort="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Radius Dropdown -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_radius"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/radius"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/multiSelection_workoutTimes">
+
+            <AutoCompleteTextView
+                android:id="@+id/ac_radius"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppinssemibold"
+                tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Search Button -->
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="140dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/search"
+            android:textAllCaps="false"
+            android:background="@drawable/btn_shape_app"
+            app:backgroundTint="@null"
+            android:fontFamily="@font/poppinsbold"
+            android:layout_marginBottom="10sp"
+            android:padding="1dp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
 
 </ScrollView>

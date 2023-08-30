@@ -295,6 +295,7 @@
                 android:textAllCaps="false"
                 android:background="@drawable/btn_shape_app"
                 app:backgroundTint="@null"
+                android:padding="1dp"
                 android:fontFamily="@font/poppinsbold"
                 android:textColor="@color/white"
                 android:gravity="center"
