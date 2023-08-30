@@ -47,4 +47,14 @@
     <string name="skill_level">Skill Level</string>
     <string name="radius">Radius</string>
 
+
+    <string-array name="radius_values">
+        <item>10 km</item>
+        <item>30 km</item>
+        <item>50 km</item>
+        <item>100 km</item>
+        <item>More than 100 km</item>
+
+    </string-array>
+
 </resources>

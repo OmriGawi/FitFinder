@@ -33,8 +33,11 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Init ViewModels
-        sportCategoriesViewModel = ViewModelProvider(this, ViewModelFactory(SportCategoriesRepository()))[SportCategoriesViewModel::class.java]
+        // Initialize ViewModels
+        sportCategoriesViewModel = ViewModelProvider(requireActivity(), ViewModelFactory(SportCategoriesRepository()))[SportCategoriesViewModel::class.java]
+
+        // Initialize adapters
+        binding.multiSelectionWorkoutTimes.items = WorkoutTime.values().map { it.name }
 
         // Initialize sport categories dropdown
         sportCategoriesViewModel.fetchSportCategories()
@@ -46,7 +49,6 @@ class SearchFragment : Fragment() {
             )
             binding.acSportCategory.setAdapter(categoriesAdapter)
         }
-
     }
 
     override fun onResume() {
@@ -56,9 +58,10 @@ class SearchFragment : Fragment() {
         val skillLevelsAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, skillLevels)
         binding.acSkillLevel.setAdapter(skillLevelsAdapter)
 
-        // Adapter for Workout Times
-        val workoutTimes = WorkoutTime.values().map { it.name }
-        binding.multiSelectionWorkoutTimes.items = workoutTimes
+        // Adapter for radius
+        val radiusValues = resources.getStringArray(R.array.radius_values).toList()
+        val radiusAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, radiusValues)
+        binding.acRadius.setAdapter(radiusAdapter)
     }
 
 }

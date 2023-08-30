@@ -42,7 +42,7 @@ class SportCategoryDialogFragment : DialogFragment() {
         isCancelable = false
 
         // Init ViewModels
-        sportCategoriesViewModel = ViewModelProvider(this, ViewModelFactory(SportCategoriesRepository()))[SportCategoriesViewModel::class.java]
+        sportCategoriesViewModel = ViewModelProvider(requireActivity(), ViewModelFactory(SportCategoriesRepository()))[SportCategoriesViewModel::class.java]
         userProfileViewModel = ViewModelProvider(requireActivity(), ViewModelFactory(UserProfileRepository()))[UserProfileViewModel::class.java]
 
         // Fetch the sport categories from Firestore

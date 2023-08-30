@@ -67,6 +67,7 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
         // Initialize Adapters
         additionalPicturesAdapter = AdditionalPicturesAdapter(mutableListOf(), requireContext(), this)
         sportCategoriesAdapter = SportCategoriesAdapter(mutableListOf(),this)
+        binding.multiSelectionWorkoutTimes.items = WorkoutTime.values().map { it.name }
 
         // Setup RecyclerView
         setupRecyclerView()
@@ -189,6 +190,7 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
         binding.btnSave.setOnClickListener {
             userProfileViewModel.updateUserProfile(userId)
         }
+
     }
 
     override fun onResume() {
@@ -197,10 +199,6 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
         val userTypes = UserType.values().map { it.name }.toTypedArray()
         val userTypesAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, userTypes)
         binding.autoCompleteTextViewUserType.setAdapter(userTypesAdapter)
-
-        // Adapter for Workout Times
-        val workoutTimes = WorkoutTime.values().map { it.name }
-        binding.multiSelectionWorkoutTimes.items = workoutTimes
     }
 
     override fun onImageRemoved(position: Int, imageUrl: String) {
