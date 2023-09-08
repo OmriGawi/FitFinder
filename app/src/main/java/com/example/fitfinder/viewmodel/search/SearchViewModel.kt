@@ -42,10 +42,11 @@ class SearchViewModel(private val repository: SearchRepository) : ViewModel() {
 
                 // Set loading to false
                 _isLoading.value = false
+                // Handle the error
+                _toastMessageEvent.value = Event(Pair("No potential users found.", ToastyType.INFO))
             } catch (e: Exception) {
                 // Handle the error
-                _toastMessageEvent.value = Event(Pair("An error occurred: ${e.message}", ToastyType.ERROR))
-
+                _toastMessageEvent.value = Event(Pair("Error: ${e.message}", ToastyType.ERROR))
                 // Set loading to false
                 _isLoading.value = false
             }

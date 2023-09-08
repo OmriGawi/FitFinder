@@ -5,7 +5,7 @@ data class PotentialUser(
     val firstName: String,
     val lastName: String,
     val age: Int,  // Calculated from birthDate
-    val userType: UserType?,
+    val userType: UserType,
     val profilePictureUrl: String?,
     val additionalPictures: List<String> = emptyList(),
     val sportCategories: List<SportCategory> = emptyList(),

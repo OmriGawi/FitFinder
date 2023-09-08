@@ -66,6 +66,7 @@ class SearchFragment : Fragment() {
             when (type) {
                 ToastyType.SUCCESS -> Toasty.success(requireContext(), message, Toasty.LENGTH_LONG, true).show()
                 ToastyType.ERROR -> Toasty.error(requireContext(), message, Toasty.LENGTH_SHORT, true).show()
+                ToastyType.INFO -> Toasty.info(requireContext(), message, Toasty.LENGTH_SHORT, true).show()
                 else -> {    // Handle any unexpected cases or log them for debugging
                     Log.e(ContentValues.TAG, "Unexpected ToastyType: $type")
                 }
