@@ -74,7 +74,7 @@ class SearchFragment : Fragment() {
         })
 
         searchViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            //TODO: Add loading img
+            binding.pbSearch.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
         // Listeners
