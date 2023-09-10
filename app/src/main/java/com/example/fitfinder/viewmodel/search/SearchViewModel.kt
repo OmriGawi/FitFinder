@@ -38,13 +38,13 @@ class SearchViewModel(private val repository: SearchRepository) : ViewModel() {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-
                 val users = repository.searchPotentialUsers(userId, categoryName, skillLevel, times, numericalRadius)
-                _potentialUsers.value = users
-
                 _isLoading.value = false
+
                 if (users.isEmpty()) {
                     _toastMessageEvent.value = Event(Pair("No potential users found.", ToastyType.INFO))
+                }else{
+                    _potentialUsers.value = users
                 }
             } catch (e: Exception) {
                 _toastMessageEvent.value = Event(Pair("Error: ${e.message}", ToastyType.ERROR))
