@@ -25,6 +25,9 @@ class SearchViewModel(private val repository: SearchRepository) : ViewModel() {
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
+    val navigateToPotentialUsers = MutableLiveData(false)
+
+
     fun searchPotentialUsers(userId: String, sportCategory: SportCategory, workoutTimes: List<WorkoutTime>, radius: String) {
         // Set loading to true
         _isLoading.value = true
@@ -42,9 +45,11 @@ class SearchViewModel(private val repository: SearchRepository) : ViewModel() {
                 _isLoading.value = false
 
                 if (users.isEmpty()) {
-                    _toastMessageEvent.value = Event(Pair("No potential users found.", ToastyType.INFO))
+                    _toastMessageEvent.value =
+                        Event(Pair("No potential users found.", ToastyType.INFO))
                 }else{
                     _potentialUsers.value = users
+                    navigateToPotentialUsers.value = true
                 }
             } catch (e: Exception) {
                 _toastMessageEvent.value = Event(Pair("Error: ${e.message}", ToastyType.ERROR))

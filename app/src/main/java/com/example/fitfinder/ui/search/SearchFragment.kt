@@ -16,6 +16,7 @@ import com.example.fitfinder.data.model.WorkoutTime
 import com.example.fitfinder.data.repository.search.SearchRepository
 import com.example.fitfinder.data.repository.sportcategories.SportCategoriesRepository
 import com.example.fitfinder.databinding.FragmentSearchBinding
+import com.example.fitfinder.ui.MainActivity
 import com.example.fitfinder.util.EventObserver
 import com.example.fitfinder.util.SharedPreferencesUtil
 import com.example.fitfinder.util.ToastyType
@@ -77,6 +78,19 @@ class SearchFragment : Fragment() {
             binding.pbSearch.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
+        searchViewModel.navigateToPotentialUsers.observe(viewLifecycleOwner) { shouldNavigate ->
+            if (shouldNavigate) {
+                // Navigate to PotentialUsersFragment
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.frame_layout, PotentialUsersFragment())
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+                // Reset the LiveData to avoid future unwanted navigation
+                searchViewModel.navigateToPotentialUsers.value = false
+            }
+        }
+
         // Listeners
         binding.btnSearch.setOnClickListener {
             if (areAllFiltersFilled()) {
@@ -96,6 +110,8 @@ class SearchFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        (activity as MainActivity).enableBackButton(false)
+
         // Adapter for skill levels
         val skillLevels = SkillLevel.values().map { it.name }
         val skillLevelsAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, skillLevels)

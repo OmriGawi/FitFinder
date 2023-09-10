@@ -134,6 +134,10 @@ class MainActivity : AppCompatActivity() {
             R.id.overflow_item_logout -> {
                 logoutViewModel.logout()
             }
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
             // Handle other menu items if needed
         }
         return super.onOptionsItemSelected(item)
@@ -155,11 +159,16 @@ class MainActivity : AppCompatActivity() {
         return super.dispatchTouchEvent(ev)
     }
 
-
-    private fun replaceFragment(fragment : Fragment){
+    private fun replaceFragment(fragment: Fragment) {
+        enableBackButton(false)  // Disable back button when navigating using BottomNavigationView
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.commit()
+    }
+
+    fun enableBackButton(enable: Boolean) {
+        supportActionBar?.setDisplayHomeAsUpEnabled(enable)
+        supportActionBar?.setDisplayShowHomeEnabled(enable)
     }
 }
