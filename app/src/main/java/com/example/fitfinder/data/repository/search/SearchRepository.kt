@@ -114,7 +114,7 @@ class SearchRepository : BaseRepository() {
             } ?: emptyList(),
             workoutTimes = (userProfile["workoutTimes"] as? List<String>)?.map { WorkoutTime.valueOf(it) } ?: emptyList(),
             description = userProfile["description"] as? String,
-            distance = null  // This is calculated later on using the user's GeoPoint
+            distance = null  //TODO: Need to put here the distance between the 2 users..
         )
     }
 
