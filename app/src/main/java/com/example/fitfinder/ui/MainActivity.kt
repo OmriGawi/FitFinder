@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.fitfinder.R
 import com.example.fitfinder.data.repository.auth.AuthRepository
@@ -162,10 +163,13 @@ class MainActivity : AppCompatActivity() {
     private fun replaceFragment(fragment: Fragment) {
         enableBackButton(false)  // Disable back button when navigating using BottomNavigationView
         val fragmentManager = supportFragmentManager
+        // Clear the back stack
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.commit()
     }
+
 
     fun enableBackButton(enable: Boolean) {
         supportActionBar?.setDisplayHomeAsUpEnabled(enable)

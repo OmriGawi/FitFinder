@@ -58,4 +58,8 @@ class SearchViewModel(private val repository: SearchRepository) : ViewModel() {
         }
     }
 
+    fun setNavigateToPotentialUsers(condition: Boolean){
+        navigateToPotentialUsers.value = condition
+    }
+
 }

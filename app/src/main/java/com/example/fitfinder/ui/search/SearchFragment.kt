@@ -87,7 +87,7 @@ class SearchFragment : Fragment() {
                 transaction.commit()
 
                 // Reset the LiveData to avoid future unwanted navigation
-                searchViewModel.navigateToPotentialUsers.value = false
+                searchViewModel.setNavigateToPotentialUsers(false)
             }
         }
 
