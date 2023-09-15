@@ -16,16 +16,26 @@ class SearchRepository : BaseRepository() {
     suspend fun searchPotentialUsers(userId: String, categoryName: String, skillLevel: String, times: List<String>, radius: Double): List<PotentialUser> {
         val currentUserLocation = fetchCurrentUserLocation(userId)
 
+        // Fetch the current user's accepted and rejected lists.
+        val currentUserDocument = firestore.collection("users").document(userId).get().await()
+        val acceptedUsers = currentUserDocument.get("accepted") as? List<String> ?: emptyList()
+        val rejectedUsers = currentUserDocument.get("rejected") as? List<String> ?: emptyList()
+
         // Filtering based on workout times
         val usersMatchingWorkoutTimes = fetchUsersByWorkoutTimes(times, userId)
 
         // Filtering based on sport category and skill level
         val usersMatchingSportCategory = usersMatchingWorkoutTimes.filter { userDocument ->
             val userData = userDocument.data ?: return@filter false
+
+            // Exclude users from accepted and rejected lists.
+            val potentialUserId = userDocument.id
+            if (acceptedUsers.contains(potentialUserId) || rejectedUsers.contains(potentialUserId)) return@filter false
+
             userMatchesSportCategory(userData, categoryName, skillLevel)
         }
 
-        //Filtering based on the radius
+        // Filtering based on the radius
         val usersWithinRadius = usersMatchingSportCategory.filter { userDocument ->
             userWithinRadius(userDocument, currentUserLocation, radius)
         }
@@ -35,6 +45,7 @@ class SearchRepository : BaseRepository() {
             mapDocumentToPotentialUser(userDocument.id, userData)
         }
     }
+
 
     private suspend fun fetchCurrentUserLocation(userId: String): GeoPoint {
         val documentSnapshot = firestore.collection("users").document(userId).get().await()
