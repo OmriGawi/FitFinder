@@ -4,6 +4,7 @@ import com.example.fitfinder.data.model.*
 import com.example.fitfinder.data.repository.BaseRepository
 import com.example.fitfinder.util.Constants.EARTH_RADIUS_IN_KM
 import com.example.fitfinder.util.ParsingUtil
+import com.example.fitfinder.util.ParsingUtil.parseDistance
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
@@ -16,33 +17,25 @@ class SearchRepository : BaseRepository() {
     suspend fun searchPotentialUsers(userId: String, categoryName: String, skillLevel: String, times: List<String>, radius: Double): List<PotentialUser> {
         val currentUserLocation = fetchCurrentUserLocation(userId)
 
-        // Fetch the current user's accepted and rejected lists.
         val currentUserDocument = firestore.collection("users").document(userId).get().await()
         val acceptedUsers = currentUserDocument.get("accepted") as? List<String> ?: emptyList()
         val rejectedUsers = currentUserDocument.get("rejected") as? List<String> ?: emptyList()
 
-        // Filtering based on workout times
         val usersMatchingWorkoutTimes = fetchUsersByWorkoutTimes(times, userId)
 
-        // Filtering based on sport category and skill level
         val usersMatchingSportCategory = usersMatchingWorkoutTimes.filter { userDocument ->
             val userData = userDocument.data ?: return@filter false
-
-            // Exclude users from accepted and rejected lists.
             val potentialUserId = userDocument.id
             if (acceptedUsers.contains(potentialUserId) || rejectedUsers.contains(potentialUserId)) return@filter false
-
             userMatchesSportCategory(userData, categoryName, skillLevel)
         }
 
-        // Filtering based on the radius
-        val usersWithinRadius = usersMatchingSportCategory.filter { userDocument ->
-            userWithinRadius(userDocument, currentUserLocation, radius)
-        }
+        // Use the modified usersWithinRadius
+        val usersAndDistances = usersWithinRadius(usersMatchingSportCategory, currentUserLocation, radius)
 
-        return usersWithinRadius.mapNotNull { userDocument ->
+        return usersAndDistances.mapNotNull { (userDocument, distance) ->
             val userData = userDocument.data ?: return@mapNotNull null
-            mapDocumentToPotentialUser(userDocument.id, userData)
+            mapDocumentToPotentialUser(userDocument.id, userData, distance)
         }
     }
 
@@ -78,10 +71,14 @@ class SearchRepository : BaseRepository() {
         } ?: false
     }
 
-    private fun userWithinRadius(userDocument: DocumentSnapshot, currentUserLocation: GeoPoint, radius: Double): Boolean {
-        val userGeoPoint = userDocument.getGeoPoint("location") ?: return false
-        val distance = distanceBetween(currentUserLocation, userGeoPoint)
-        return distance <= radius
+    private fun usersWithinRadius(documents: List<DocumentSnapshot>, currentUserLocation: GeoPoint, radius: Double): List<Pair<DocumentSnapshot, Double>> {
+        return documents.mapNotNull { document ->
+            val userGeoPoint = document.getGeoPoint("location")
+            if (userGeoPoint != null) {
+                val distance = distanceBetween(currentUserLocation, userGeoPoint)
+                if (distance <= radius) Pair(document, distance) else null
+            } else null
+        }
     }
 
     private fun distanceBetween(point1: GeoPoint, point2: GeoPoint): Double {
@@ -100,7 +97,7 @@ class SearchRepository : BaseRepository() {
     }
 
 
-    private fun mapDocumentToPotentialUser(documentId: String, data: Map<String, Any>): PotentialUser {
+    private fun mapDocumentToPotentialUser(documentId: String, data: Map<String, Any>, distance: Double): PotentialUser  {
         // Extract the userProfile map from data
         val userProfile = data["userProfile"] as? Map<String, Any> ?: emptyMap()
 
@@ -122,7 +119,7 @@ class SearchRepository : BaseRepository() {
             } ?: emptyList(),
             workoutTimes = (userProfile["workoutTimes"] as? List<String>)?.map { WorkoutTime.valueOf(it) } ?: emptyList(),
             description = userProfile["description"] as? String,
-            distance = null  //TODO: Need to put here the distance between the 2 users..
+            distance = parseDistance(distance)
         )
     }
 

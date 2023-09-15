@@ -23,4 +23,10 @@ object ParsingUtil {
 
         return age
     }
+
+    fun parseDistance(distance: Double): Float {
+        val roundedDistance = if (distance < 1) 1.0 else distance
+        return String.format("%.2f", roundedDistance).toFloat()
+    }
+
 }
