@@ -81,4 +81,9 @@ dependencies {
 
     // GeoHash
     implementation 'ch.hsr:geohash:1.3.0'
+
+    // CardStackView Repository
+    // https://github.com/yuyakaido/CardStackView
+    implementation 'com.github.yuyakaido:CardStackView:v2.3.4'
+
 }

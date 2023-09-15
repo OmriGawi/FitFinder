@@ -58,6 +58,28 @@ class SearchViewModel(private val repository: SearchRepository) : ViewModel() {
         }
     }
 
+    fun acceptUser(currentUserId: String, acceptedUserId: String) {
+        viewModelScope.launch {
+            try {
+                repository.acceptUser(currentUserId, acceptedUserId)
+                // Maybe trigger a LiveData event if you want to give feedback
+            } catch (e: Exception) {
+                _toastMessageEvent.value = Event(Pair("Error: ${e.message}", ToastyType.ERROR))
+            }
+        }
+    }
+
+    fun rejectUser(currentUserId: String, rejectedUserId: String) {
+        viewModelScope.launch {
+            try {
+                repository.rejectUser(currentUserId, rejectedUserId)
+                // Maybe trigger a LiveData event if you want to give feedback
+            } catch (e: Exception) {
+                _toastMessageEvent.value = Event(Pair("Error: ${e.message}", ToastyType.ERROR))
+            }
+        }
+    }
+
     fun setNavigateToPotentialUsers(condition: Boolean){
         navigateToPotentialUsers.value = condition
     }

@@ -5,10 +5,7 @@ import com.example.fitfinder.data.repository.BaseRepository
 import com.example.fitfinder.util.Constants.EARTH_RADIUS_IN_KM
 import com.example.fitfinder.util.ParsingUtil
 import com.google.firebase.Timestamp
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
 
 
@@ -116,6 +113,18 @@ class SearchRepository : BaseRepository() {
             description = userProfile["description"] as? String,
             distance = null  //TODO: Need to put here the distance between the 2 users..
         )
+    }
+
+
+
+    fun acceptUser(currentUserId: String, acceptedUserId: String) {
+        val userRef = FirebaseFirestore.getInstance().collection("users").document(currentUserId)
+        userRef.update("accepted", FieldValue.arrayUnion(acceptedUserId))
+    }
+
+    fun rejectUser(currentUserId: String, rejectedUserId: String) {
+        val userRef = FirebaseFirestore.getInstance().collection("users").document(currentUserId)
+        userRef.update("rejected", FieldValue.arrayUnion(rejectedUserId))
     }
 
 }
