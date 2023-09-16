@@ -58,6 +58,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:22.1.1'
     implementation 'com.google.firebase:firebase-firestore:24.7.1'
     implementation 'com.google.firebase:firebase-storage-ktx:20.2.1'
+    implementation 'com.google.firebase:firebase-functions-ktx:20.3.1'
 
     // Toasty Repository
     implementation 'com.github.GrenderG:Toasty:1.5.2'
