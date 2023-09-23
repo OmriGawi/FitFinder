@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.fitfinder.R
 import com.example.fitfinder.data.repository.auth.AuthRepository
 import com.example.fitfinder.data.repository.location.LocationRepository
+import com.example.fitfinder.data.repository.notification.NotificationRepository
 import com.example.fitfinder.databinding.ActivityMainBinding
 import com.example.fitfinder.ui.auth.LoginActivity
 import com.example.fitfinder.ui.calendar.CalendarFragment
@@ -30,6 +31,7 @@ import com.example.fitfinder.util.SharedPreferencesUtil
 import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.auth.LogoutViewModel
 import com.example.fitfinder.viewmodel.location.LocationViewModel
+import com.example.fitfinder.viewmodel.notification.NotificationViewModel
 import es.dmoral.toasty.Toasty
 
 class MainActivity : AppCompatActivity() {
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     // view-model
     private lateinit var logoutViewModel: LogoutViewModel
     private lateinit var locationViewModel: LocationViewModel
+    private lateinit var notificationViewModel: NotificationViewModel
 
     // Fragments
     private val profileFragment by lazy { ProfileFragment() }
@@ -62,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         // Initialize view models
         logoutViewModel = ViewModelProvider(this, ViewModelFactory(AuthRepository()))[LogoutViewModel::class.java]
         locationViewModel = ViewModelProvider(this, ViewModelFactory(LocationRepository()))[LocationViewModel::class.java]
+        notificationViewModel = ViewModelProvider(this, ViewModelFactory(NotificationRepository()))[NotificationViewModel::class.java]
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             val title: String = when(it.itemId) {
@@ -121,6 +125,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        // Fetch and save FCM token
+        val userId = SharedPreferencesUtil.getUserId(this@MainActivity)
+        userId?.let {
+            notificationViewModel.saveFcmToken(it)
+        }
 
         //TODO: Do something if the use not approving the location permissions...
     }
