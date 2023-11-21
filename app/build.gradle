@@ -88,4 +88,8 @@ dependencies {
     // https://github.com/yuyakaido/CardStackView
     implementation 'com.github.yuyakaido:CardStackView:v2.3.4'
 
+    // CircleImageView Repository
+    // https://github.com/hdodenhof/CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
 }

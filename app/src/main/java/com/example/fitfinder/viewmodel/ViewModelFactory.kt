@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.fitfinder.data.repository.BaseRepository
 import com.example.fitfinder.data.repository.auth.AuthRepository
 import com.example.fitfinder.data.repository.location.LocationRepository
+import com.example.fitfinder.data.repository.messages.MatchesRepository
 import com.example.fitfinder.data.repository.notification.NotificationRepository
 import com.example.fitfinder.data.repository.profile.UserProfileRepository
 import com.example.fitfinder.data.repository.search.SearchRepository
@@ -14,6 +15,7 @@ import com.example.fitfinder.viewmodel.auth.LoginViewModel
 import com.example.fitfinder.viewmodel.auth.LogoutViewModel
 import com.example.fitfinder.viewmodel.auth.SignupViewModel
 import com.example.fitfinder.viewmodel.location.LocationViewModel
+import com.example.fitfinder.viewmodel.messages.MatchesViewModel
 import com.example.fitfinder.viewmodel.notification.NotificationViewModel
 import com.example.fitfinder.viewmodel.profile.UserProfileViewModel
 import com.example.fitfinder.viewmodel.search.SearchViewModel
@@ -56,6 +58,10 @@ class ViewModelFactory(private val repository: BaseRepository) : ViewModelProvid
         // Notification
         if (modelClass.isAssignableFrom(NotificationViewModel::class.java)) {
             return NotificationViewModel(repository as NotificationRepository) as T
+        }
+        // Matches
+        if (modelClass.isAssignableFrom(MatchesViewModel::class.java)) {
+            return MatchesViewModel(repository as MatchesRepository) as T
         }
 
         // Add more conditions for other ViewModel classes
