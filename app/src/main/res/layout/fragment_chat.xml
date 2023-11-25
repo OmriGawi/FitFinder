@@ -1,0 +1,91 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <!-- Custom header -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:padding="8dp"
+        android:background="?attr/colorPrimary">
+
+        <!-- Back Button -->
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back_white"
+            android:padding="8dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <!-- User's Circular Image -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/imageCardView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@id/backButton"
+            android:layout_marginStart="40dp">
+
+        <ImageView
+            android:id="@+id/iv_profilePicture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- User's Name -->
+        <TextView
+            android:id="@+id/tv_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="David"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppinsmedium"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imageCardView" />
+    </RelativeLayout>
+
+    <!-- Chat messages RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rv_chat"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:padding="16dp"/>
+
+    <!-- Message input area -->
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <EditText
+        android:id="@+id/et_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="@string/type_a_message"
+        android:fontFamily="@font/poppinsregular"/>
+
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send"
+        android:fontFamily="@font/poppinssemibold"
+        android:focusable="true" />
+    </LinearLayout>
+
+</LinearLayout>

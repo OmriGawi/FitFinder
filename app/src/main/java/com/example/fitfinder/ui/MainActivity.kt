@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
@@ -184,5 +185,13 @@ class MainActivity : AppCompatActivity() {
     fun enableBackButton(enable: Boolean) {
         supportActionBar?.setDisplayHomeAsUpEnabled(enable)
         supportActionBar?.setDisplayShowHomeEnabled(enable)
+    }
+
+    fun setBottomNavigationVisibility(visible: Boolean) {
+        if (visible) {
+            binding.bottomNavigationView.visibility = View.VISIBLE
+        } else {
+            binding.bottomNavigationView.visibility = View.GONE
+        }
     }
 }

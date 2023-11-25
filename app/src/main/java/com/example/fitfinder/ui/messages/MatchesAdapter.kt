@@ -10,6 +10,8 @@ import com.example.fitfinder.data.model.PotentialUser
 
 class MatchesAdapter(private var data: List<Pair<Match, PotentialUser>>) : RecyclerView.Adapter<MatchViewHolder>() {
 
+    var onMatchClickListener: ((Match, PotentialUser) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_chats, parent, false)
         return MatchViewHolder(view)
@@ -21,6 +23,10 @@ class MatchesAdapter(private var data: List<Pair<Match, PotentialUser>>) : Recyc
         Glide.with(holder.profilePictureImageView.context).load(potentialUser.profilePictureUrl).into(holder.profilePictureImageView)
         holder.nameTextView.text = "${potentialUser.firstName} ${potentialUser.lastName}"
         holder.lastMessageTextView.text = match.lastMessage?.content ?: "No messages yet"
+
+        holder.itemView.setOnClickListener {
+            onMatchClickListener?.invoke(match, potentialUser)
+        }
     }
 
     override fun getItemCount() = data.size

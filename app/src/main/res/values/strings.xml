@@ -46,6 +46,8 @@
     <string name="sport_category">Sport Category</string>
     <string name="skill_level">Skill Level</string>
     <string name="radius">Radius</string>
+    <string name="type_a_message">Type a message</string>
+    <string name="send">Send</string>
 
 
     <string-array name="radius_values">

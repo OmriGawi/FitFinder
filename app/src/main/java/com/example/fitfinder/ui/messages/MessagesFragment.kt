@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.example.fitfinder.R
 import com.example.fitfinder.data.repository.messages.MatchesRepository
 import com.example.fitfinder.databinding.FragmentMessagesBinding
 import com.example.fitfinder.util.SharedPreferencesUtil
@@ -14,6 +15,7 @@ import com.example.fitfinder.viewmodel.messages.MatchesViewModel
 
 class MessagesFragment : Fragment() {
 
+    // Variables
     private lateinit var binding: FragmentMessagesBinding
     private lateinit var matchesViewModel: MatchesViewModel
     private lateinit var matchesAdapter: MatchesAdapter
@@ -43,6 +45,11 @@ class MessagesFragment : Fragment() {
             matchesAdapter.updateData(matchesWithUsers)
         }
 
+        matchesAdapter.onMatchClickListener = { match, potentialUser ->
+            matchesViewModel.selectMatchWithUser(match, potentialUser)
+            navigateToChat()
+        }
+
         // Set up Listeners
         matchesViewModel.observeMatchesUpdates(userId)
     }
@@ -50,4 +57,13 @@ class MessagesFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.rvChats.adapter = matchesAdapter
     }
+
+    private fun navigateToChat() {
+        val chatFragment = ChatFragment()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, chatFragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
 }
