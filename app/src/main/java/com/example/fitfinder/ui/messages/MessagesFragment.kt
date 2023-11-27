@@ -65,5 +65,4 @@ class MessagesFragment : Fragment() {
             .addToBackStack(null)
             .commit()
     }
-
 }

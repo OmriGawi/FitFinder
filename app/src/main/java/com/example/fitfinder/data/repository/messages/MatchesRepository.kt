@@ -29,7 +29,8 @@ class MatchesRepository: BaseRepository() {
 
             Tasks.whenAllSuccess<DocumentSnapshot>(matchTasks).addOnSuccessListener { matchDocuments ->
                 val matchList = matchDocuments.mapNotNull { document ->
-                    document.toObject(Match::class.java)
+                    val match = document.toObject(Match::class.java)
+                    match?.copy(matchId = document.id)
                 }
 
                 // Fetch the potential user for each match
