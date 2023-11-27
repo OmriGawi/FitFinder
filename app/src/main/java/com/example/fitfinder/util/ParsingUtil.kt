@@ -1,6 +1,7 @@
 package com.example.fitfinder.util
 
 import com.google.firebase.Timestamp
+import java.text.SimpleDateFormat
 import java.util.*
 
 object ParsingUtil {
@@ -27,6 +28,11 @@ object ParsingUtil {
     fun parseDistance(distance: Double): Float {
         val roundedDistance = if (distance < 1) 1.0 else distance
         return String.format("%.2f", roundedDistance).toFloat()
+    }
+
+    fun formatTimestamp(timestamp: Long): String {
+        val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        return dateFormat.format(Date(timestamp))
     }
 
 }

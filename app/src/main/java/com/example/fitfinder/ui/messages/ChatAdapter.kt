@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitfinder.R
 import com.example.fitfinder.data.model.Message
+import com.example.fitfinder.util.ParsingUtil
 
 class ChatAdapter(private val currentUserId: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -51,7 +52,7 @@ class ChatAdapter(private val currentUserId: String) : RecyclerView.Adapter<Recy
 
         fun bind(message: Message) {
             messageText.text = message.content
-            // Convert timestamp to readable time and set to timeText
+            timeText.text = ParsingUtil.formatTimestamp(message.timestamp)
         }
     }
 
@@ -61,7 +62,7 @@ class ChatAdapter(private val currentUserId: String) : RecyclerView.Adapter<Recy
 
         fun bind(message: Message) {
             messageText.text = message.content
-            // Convert timestamp to readable time and set to timeText
+            timeText.text = ParsingUtil.formatTimestamp(message.timestamp)
         }
     }
 }

@@ -10,12 +10,11 @@ class ChatRepository: BaseRepository() {
 
     private val db = FirebaseFirestore.getInstance()
 
-    fun getMessages(matchId: String, limit: Long = 20): Query {
+    fun getMessages(matchId: String): Query {
         return db.collection("matches")
             .document(matchId)
             .collection("messages")
             .orderBy("timestamp", Query.Direction.DESCENDING)
-            .limit(limit)
     }
 
     fun sendMessage(matchId: String, message: Message): Task<Void> {
