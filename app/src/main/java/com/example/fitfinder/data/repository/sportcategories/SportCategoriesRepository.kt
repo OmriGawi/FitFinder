@@ -12,5 +12,11 @@ class SportCategoriesRepository : BaseRepository(){
     fun fetchSportCategories(): Task<QuerySnapshot> {
         return firestore.collection("sport_categories").get()
     }
+
+    fun fetchExercisesForCategory(categoryName: String): Task<QuerySnapshot> {
+        return firestore.collection("sport_categories")
+            .whereEqualTo("name", categoryName)
+            .get()
+    }
 }
 
