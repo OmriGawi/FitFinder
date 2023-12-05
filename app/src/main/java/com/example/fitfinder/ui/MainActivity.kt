@@ -187,6 +187,10 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(enable)
     }
 
+    fun setTitle(title: String){
+        supportActionBar?.title = title
+    }
+
     fun setBottomNavigationVisibility(visible: Boolean) {
         if (visible) {
             binding.bottomNavigationView.visibility = View.VISIBLE

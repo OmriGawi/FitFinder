@@ -23,6 +23,8 @@ class CalendarCreateEventFragment: Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).enableBackButton(true)
+        (activity as MainActivity).setTitle("Create a training session")
+
 
         // Retrieve the passed selected date and set it to the Date button
         arguments?.getString("selectedDate")?.let { selectedDate ->
@@ -46,6 +48,7 @@ class CalendarCreateEventFragment: Fragment(),
     override fun onDestroy() {
         super.onDestroy()
         (activity as MainActivity).enableBackButton(false)
+        (activity as MainActivity).setTitle("Calendar")
     }
 
     override fun onDateSelected(date: String) {
