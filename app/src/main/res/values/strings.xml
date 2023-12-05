@@ -7,6 +7,8 @@
     <string name="enter_your_email">Enter your email</string>
     <string name="create_password">Create password</string>
     <string name="date_of_birth">Date of birth</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
     <string name="let_s_help_you_meet_up_your_partners">Let\'s help you meet up your partners.</string>
     <string name="already_have_an_account">Already have an account? </string>
     <string name="welcome_back">Welcome Back!</string>
@@ -25,6 +27,7 @@
     <string name="calendar">Calendar</string>
     <string name="search">Search</string>
     <string name="exercise">Exercise</string>
+    <string name="exercises">Exercises</string>
     <string name="logout">Logout</string>
     <string name="relevant_information">Relevant Information</string>
     <string name="user_type">User Type</string>
@@ -48,6 +51,10 @@
     <string name="radius">Radius</string>
     <string name="type_a_message">Type a message</string>
     <string name="send">Send</string>
+    <string name="partner">Partner</string>
+    <string name="location">Location</string>
+    <string name="additional_equipment">Additional Equipment</string>
+    <string name="create">Create</string>
 
 
     <string-array name="radius_values">

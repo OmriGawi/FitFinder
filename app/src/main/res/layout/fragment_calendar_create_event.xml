@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="16dp">
+
+    <!-- ScrollView for the entire form -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Sport Category -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/sport_category">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView_sportCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:inputType="none"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Exercises -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/exercises">
+
+                <com.zeeshan.material.multiselectionspinner.MultiSelectionSpinner
+                    android:id="@+id/multiSelection_workoutTimes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:importantForAutofill="no"
+                    android:inputType="none"
+                    android:maxLines="1"
+                    android:textSize="14sp"
+                    app:showSearch="false"
+                    app:sort="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Partner -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/partner">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView_partner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:inputType="none"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Date Button -->
+            <Button
+                android:id="@+id/btn_date"
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_shape_calendar_event"
+                android:fontFamily="@font/poppinsregular"
+                android:text="@string/date"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:backgroundTint="@null"
+                tools:layout_editor_absoluteX="164dp" />
+
+            <!-- Time Button -->
+            <Button
+                android:id="@+id/btn_time"
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_shape_calendar_event"
+                android:fontFamily="@font/poppinsregular"
+                android:text="@string/time"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:backgroundTint="@null"
+                tools:layout_editor_absoluteX="164dp" />
+
+            <!-- Location EditText -->
+            <EditText
+                android:id="@+id/et_location"
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_shape"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppinsregular"
+                android:hint="@string/location"
+                android:paddingStart="10dp"
+                tools:ignore="RtlSymmetry" />
+
+            <!-- Equipment EditText -->
+            <EditText
+                android:id="@+id/et_equipment"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_shape"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppinsregular"
+                android:hint="@string/additional_equipment"
+                android:paddingStart="10dp"
+                tools:ignore="RtlSymmetry" />
+
+            <!-- Create Button -->
+            <Button
+                android:id="@+id/btn_create"
+                android:layout_width="150dp"
+                android:layout_height="57dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/btn_shape_app"
+                android:fontFamily="@font/poppinsregular"
+                android:text="@string/create"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:backgroundTint="@null"
+                tools:layout_editor_absoluteX="164dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
