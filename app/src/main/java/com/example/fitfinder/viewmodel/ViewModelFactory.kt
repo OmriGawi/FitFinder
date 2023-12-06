@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.fitfinder.data.repository.BaseRepository
 import com.example.fitfinder.data.repository.auth.AuthRepository
+import com.example.fitfinder.data.repository.calendar.CalendarCreateEventRepository
 import com.example.fitfinder.data.repository.location.LocationRepository
 import com.example.fitfinder.data.repository.messages.ChatRepository
 import com.example.fitfinder.data.repository.messages.MatchesRepository
@@ -15,6 +16,7 @@ import com.example.fitfinder.viewmodel.auth.ForgotPasswordViewModel
 import com.example.fitfinder.viewmodel.auth.LoginViewModel
 import com.example.fitfinder.viewmodel.auth.LogoutViewModel
 import com.example.fitfinder.viewmodel.auth.SignupViewModel
+import com.example.fitfinder.viewmodel.calendar.CalendarCreateEventViewModel
 import com.example.fitfinder.viewmodel.location.LocationViewModel
 import com.example.fitfinder.viewmodel.messages.ChatViewModel
 import com.example.fitfinder.viewmodel.messages.MatchesViewModel
@@ -68,6 +70,10 @@ class ViewModelFactory(private val repository: BaseRepository) : ViewModelProvid
         // Chat
         if (modelClass.isAssignableFrom(ChatViewModel::class.java)) {
             return ChatViewModel(repository as ChatRepository) as T
+        }
+        // CalendarEvent
+        if (modelClass.isAssignableFrom(CalendarCreateEventViewModel::class.java)) {
+            return CalendarCreateEventViewModel(repository as CalendarCreateEventRepository) as T
         }
 
         // Add more conditions for other ViewModel classes

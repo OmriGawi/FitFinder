@@ -53,7 +53,8 @@
     <string name="send">Send</string>
     <string name="partner">Partner</string>
     <string name="location">Location</string>
-    <string name="additional_equipment">Additional Equipment</string>
+    <string name="additional_equipment">Additional Equipment \n(Only if needed)</string>
+
     <string name="create">Create</string>
 
 

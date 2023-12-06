@@ -43,7 +43,7 @@
                 android:hint="@string/exercises">
 
                 <com.zeeshan.material.multiselectionspinner.MultiSelectionSpinner
-                    android:id="@+id/multiSelection_workoutTimes"
+                    android:id="@+id/multiSelection_exercises"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"

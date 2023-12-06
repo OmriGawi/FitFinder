@@ -58,7 +58,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="20dp"
         app:tint="@color/white"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/secondaryColor"
         app:srcCompat="@drawable/ic_add_new" />
 
 </FrameLayout>
