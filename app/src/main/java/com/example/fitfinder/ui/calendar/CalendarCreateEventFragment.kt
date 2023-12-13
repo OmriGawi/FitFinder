@@ -1,6 +1,8 @@
 package com.example.fitfinder.ui.calendar
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +15,9 @@ import com.example.fitfinder.data.repository.messages.MatchesRepository
 import com.example.fitfinder.data.repository.sportcategories.SportCategoriesRepository
 import com.example.fitfinder.databinding.FragmentCalendarCreateEventBinding
 import com.example.fitfinder.ui.MainActivity
+import com.example.fitfinder.util.EventObserver
 import com.example.fitfinder.util.SharedPreferencesUtil
+import com.example.fitfinder.util.ToastyType
 import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.calendar.CalendarCreateEventViewModel
 import com.example.fitfinder.viewmodel.messages.MatchesViewModel
@@ -69,6 +73,17 @@ class CalendarCreateEventFragment: Fragment(),
             updateExercisesSpinner(exercises)
         }
 
+        // Observe toast message events
+        calendarCreateEventViewModel.toastMessageEvent.observe(viewLifecycleOwner, EventObserver { (message, type) ->
+            when (type) {
+                ToastyType.SUCCESS -> Toasty.success(requireContext(), message, Toasty.LENGTH_SHORT, true).show()
+                ToastyType.ERROR -> Toasty.error(requireContext(), message, Toasty.LENGTH_SHORT, true).show()
+                else -> {    // Handle any unexpected cases or log them for debugging
+                    Log.e(ContentValues.TAG, "Unexpected ToastyType: $type")
+                }
+            }
+        })
+
         // Fetch matches and users
         val userId = SharedPreferencesUtil.getUserId(requireContext()).toString()
         matchesViewModel.fetchMatchesAndUsersForUser(userId)
@@ -84,7 +99,6 @@ class CalendarCreateEventFragment: Fragment(),
             )
             binding.autoCompleteTextViewPartner.setAdapter(partnersAdapter)
         }
-
 
 
         // Listeners
@@ -116,19 +130,26 @@ class CalendarCreateEventFragment: Fragment(),
                     it.second.firstName + " " + it.second.lastName == selectedPartnerName
                 }?.second
 
-                val selectedPartnerId = selectedPartner?.userId // Use this ID for your event creation
+                val selectedPartnerId = selectedPartner?.userId
                 val selectedDate = binding.btnDate.text.toString()
                 val selectedTime = binding.btnTime.text.toString()
                 val selectedLocation = binding.etLocation.text.toString()
                 val selectedAdditionalEquipment = binding.etEquipment.text.toString()
 
+                calendarCreateEventViewModel.createTrainingInvite(
+                    senderId = userId,
+                    receiverId = selectedPartnerId,
+                    sportCategory = selectedSportCategory,
+                    exercises = selectedExercises,
+                    dateStr = selectedDate,
+                    timeStr = selectedTime,
+                    location = selectedLocation,
+                    additionalEquipment = selectedAdditionalEquipment
+                )
             } else {
                 Toasty.warning(requireContext(), "Please fill all the fields to proceed.", Toasty.LENGTH_SHORT).show()
             }
         }
-
-
-
     }
 
     data class PartnerItem(val id: String, val name: String) {
