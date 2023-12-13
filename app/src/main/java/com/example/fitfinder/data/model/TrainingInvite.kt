@@ -2,7 +2,6 @@ package com.example.fitfinder.data.model
 import com.google.firebase.Timestamp
 
 data class TrainingInvite(
-    val id: String? = null,
     val senderId: String,
     val receiverId: String,
     val sportCategory: String,
