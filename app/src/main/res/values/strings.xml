@@ -56,6 +56,10 @@
     <string name="additional_equipment">Additional Equipment \n(Only if needed)</string>
 
     <string name="create">Create</string>
+    <string name="new_invites">New Invites</string>
+    <string name="progress">Progress</string>
+    <string name="unfilled_reports">Unfilled Reports</string>
+    <string name="training_sessions">Training Sessions</string>
 
 
     <string-array name="radius_values">
