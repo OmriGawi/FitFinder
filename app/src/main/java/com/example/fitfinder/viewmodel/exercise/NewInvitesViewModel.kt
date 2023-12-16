@@ -8,14 +8,15 @@ import com.example.fitfinder.data.repository.exercise.NewInvitesRepository
 
 class NewInvitesViewModel(private val repository: NewInvitesRepository) : ViewModel() {
 
-    private val _invites = MutableLiveData<List<TrainingInvite>>()
-    val invites: LiveData<List<TrainingInvite>> = _invites
+    private val _invitesWithDetails = MutableLiveData<List<Pair<TrainingInvite, Map<String, Any?>>>>()
+    val invitesWithDetails: LiveData<List<Pair<TrainingInvite, Map<String, Any?>>>> = _invitesWithDetails
 
     fun fetchNewInvites(userId: String) {
-        repository.fetchNewInvites(userId) { newInvites ->
-            _invites.postValue(newInvites)
+        repository.fetchNewInvites(userId) { newInvitesWithDetails ->
+            _invitesWithDetails.postValue(newInvitesWithDetails)
         }
     }
 }
+
 
 

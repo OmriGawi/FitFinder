@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fitfinder.data.model.TrainingInvite
 import com.example.fitfinder.data.repository.exercise.NewInvitesRepository
 import com.example.fitfinder.databinding.FragmentNewInvitesBinding
 import com.example.fitfinder.ui.MainActivity
@@ -36,18 +37,16 @@ class NewInvitesFragment : Fragment() {
 
         setupRecyclerView()
 
-        newInvitesViewModel.fetchNewInvites(userId)
-
-        // Inside NewInvitesFragment onViewCreated or a similar lifecycle method
-        newInvitesViewModel.invites.observe(viewLifecycleOwner) { invites ->
-            invitesAdapter.updateData(invites)
+        // Observe to the ViewModel's LiveData containing invites with user details
+        newInvitesViewModel.invitesWithDetails.observe(viewLifecycleOwner) { invitesWithDetails ->
+            invitesAdapter.updateData(invitesWithDetails)
         }
 
-
+        newInvitesViewModel.fetchNewInvites(userId)
     }
 
     private fun setupRecyclerView() {
-        invitesAdapter = NewInvitesAdapter(emptyList())
+        invitesAdapter = NewInvitesAdapter(emptyList<Pair<TrainingInvite, Map<String, Any?>>>())
         binding.rvNewInvites.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = invitesAdapter
