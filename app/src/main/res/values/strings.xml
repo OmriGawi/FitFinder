@@ -60,6 +60,9 @@
     <string name="progress">Progress</string>
     <string name="unfilled_reports">Unfilled Reports</string>
     <string name="training_sessions">Training Sessions</string>
+    <string name="new_invite_request">New invite request</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
 
 
     <string-array name="radius_values">

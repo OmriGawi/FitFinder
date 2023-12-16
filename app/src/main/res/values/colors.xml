@@ -15,4 +15,6 @@
 
     <color name="chat_secondary">#CCC8C8</color>
 
+    <color name="text_error">#ff6262</color>
+
 </resources>

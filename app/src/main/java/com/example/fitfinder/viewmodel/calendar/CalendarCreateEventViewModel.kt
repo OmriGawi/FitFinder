@@ -36,7 +36,8 @@ class CalendarCreateEventViewModel(private val repository: CalendarCreateEventRe
                 exercises = exercises,
                 dateTime = it,
                 location = location,
-                additionalEquipment = additionalEquipment
+                additionalEquipment = additionalEquipment,
+                createdAt = Timestamp.now()
             )
             repository.createInvite(invite) { success ->
                 if (success) {

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        tools:ignore="MissingConstraints">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="29dp"
+            app:cardPreventCornerOverlap="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_picture"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:layout_margin="0dp"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/avatars[0]" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:fontFamily="@font/poppinssemibold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:singleLine="true"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toRightOf="@id/cv_card"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/cv_card"
+            tools:text="Display name" />
+
+        <TextView
+            android:id="@+id/tv_request"
+            android:fontFamily="@font/poppinsregular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="7dp"
+            android:text="@string/new_invite_request"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/cv_card"
+            app:layout_constraintLeft_toRightOf="@id/cv_card" />
+
+        <Button
+            android:id="@+id/btn_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/accept"
+            app:layout_constraintLeft_toLeftOf="@id/tv_request"
+            app:layout_constraintTop_toBottomOf="@id/tv_request" />
+
+        <Button
+            android:id="@+id/btn_decline"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginStart="24dp"
+            android:backgroundTint="@color/text_error"
+            android:text="@string/decline"
+            app:layout_constraintLeft_toRightOf="@id/btn_accept"
+            app:layout_constraintTop_toTopOf="@id/btn_accept" />
+
+
+        <ImageView
+            android:id="@+id/iv_info"
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="24dp"
+            android:backgroundTint="@color/text_error"
+            app:srcCompat="@drawable/info"
+            app:layout_constraintLeft_toRightOf="@id/btn_decline"
+            app:layout_constraintTop_toTopOf="@id/btn_decline" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
