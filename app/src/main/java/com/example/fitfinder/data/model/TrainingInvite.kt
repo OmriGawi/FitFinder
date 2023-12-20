@@ -3,6 +3,7 @@ import com.google.firebase.Timestamp
 import java.util.*
 
 data class TrainingInvite(
+    var id: String = "", // used for the document id (from firestore)
     val senderId: String = "",
     val receiverId: String = "",
     val sportCategory: String = "",

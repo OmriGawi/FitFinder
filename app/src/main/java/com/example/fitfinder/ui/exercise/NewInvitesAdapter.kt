@@ -12,7 +12,10 @@ import com.bumptech.glide.Glide
 import com.example.fitfinder.R
 import com.example.fitfinder.data.model.TrainingInvite
 
-class NewInvitesAdapter(private var invitesWithDetails: List<Pair<TrainingInvite, Map<String, Any?>>>) : RecyclerView.Adapter<NewInvitesAdapter.ViewHolder>() {
+class NewInvitesAdapter(
+    private var invitesWithDetails: List<Pair<TrainingInvite, Map<String, Any?>>>,
+    private val onDeclineInvite: (String) -> Unit
+    ) : RecyclerView.Adapter<NewInvitesAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvName: TextView = view.findViewById(R.id.tv_name)
@@ -41,7 +44,7 @@ class NewInvitesAdapter(private var invitesWithDetails: List<Pair<TrainingInvite
         }
 
         holder.btnDecline.setOnClickListener {
-            // Handle decline action
+            onDeclineInvite(invite.id)
         }
     }
 
