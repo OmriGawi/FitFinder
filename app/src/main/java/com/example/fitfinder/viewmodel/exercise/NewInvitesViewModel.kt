@@ -16,6 +16,13 @@ class NewInvitesViewModel(private val repository: NewInvitesRepository) : ViewMo
     private val _toastMessageEvent = MutableLiveData<Event<Pair<String, ToastyType>>>()
     val toastMessageEvent: LiveData<Event<Pair<String, ToastyType>>> = _toastMessageEvent
 
+    private val _selectedInvite = MutableLiveData<TrainingInvite>()
+    val selectedInvite: LiveData<TrainingInvite> = _selectedInvite
+
+    fun selectInvite(invite: TrainingInvite) {
+        _selectedInvite.value = invite
+    }
+
     fun fetchNewInvites(userId: String) {
         repository.fetchNewInvites(userId) { newInvitesWithDetails ->
             _invitesWithDetails.postValue(newInvitesWithDetails)

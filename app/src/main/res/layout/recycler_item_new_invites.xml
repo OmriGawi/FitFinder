@@ -84,6 +84,8 @@
             android:layout_marginStart="5dp"
             android:backgroundTint="@color/text_error"
             app:srcCompat="@drawable/info"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintLeft_toRightOf="@id/btn_decline"
             app:layout_constraintTop_toTopOf="@id/btn_decline" />
 

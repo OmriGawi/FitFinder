@@ -14,7 +14,8 @@ import com.example.fitfinder.data.model.TrainingInvite
 
 class NewInvitesAdapter(
     private var invitesWithDetails: List<Pair<TrainingInvite, Map<String, Any?>>>,
-    private val onDeclineInvite: (String) -> Unit
+    private val onDeclineInvite: (String) -> Unit,
+    private val onInfoClicked: (TrainingInvite) -> Unit
     ) : RecyclerView.Adapter<NewInvitesAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -22,6 +23,7 @@ class NewInvitesAdapter(
         val ivProfile: ImageView = view.findViewById(R.id.iv_picture)
         val btnAccept: Button = view.findViewById(R.id.btn_accept)
         val btnDecline: Button = view.findViewById(R.id.btn_decline)
+        val ivInfo: ImageView = view.findViewById(R.id.iv_info)
         // ... other views
     }
 
@@ -45,6 +47,10 @@ class NewInvitesAdapter(
 
         holder.btnDecline.setOnClickListener {
             onDeclineInvite(invite.id)
+        }
+
+        holder.ivInfo.setOnClickListener {
+            onInfoClicked(invitesWithDetails[position].first)
         }
     }
 

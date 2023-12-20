@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:background="@drawable/dialog_border"
+    android:padding="20dp">
+
+    <!-- Title TextView -->
+    <TextView
+        android:id="@+id/tv_inviteTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Training Invite Details:"
+        android:textColor="@color/primaryColor"
+        android:fontFamily="@font/poppinssemibold"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Divider -->
+    <View
+        android:id="@+id/view_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_inviteTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Content Layout -->
+    <LinearLayout
+        android:id="@+id/layout_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/view_divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Date & Time Title TextView -->
+        <TextView
+            android:id="@+id/tv_timeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date &amp; Time"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="16sp" />
+
+        <!-- Date & Time Value TextView -->
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DEC, 16 2024 4:10 PM"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsregular"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp" />
+
+        <!-- Location Title TextView -->
+        <TextView
+            android:id="@+id/tv_locationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="16sp" />
+
+        <!-- Location Value TextView -->
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yarkon Park"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsregular"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp" />
+
+        <!-- Sport Category Title TextView -->
+        <TextView
+            android:id="@+id/tv_sportCategoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sport Category"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="16sp" />
+
+        <!-- Sport Category Value TextView -->
+        <TextView
+            android:id="@+id/tv_sportCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calisthenics"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsregular"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp" />
+
+        <!-- Exercises Title TextView -->
+        <TextView
+            android:id="@+id/exercisesTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exercises"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="16sp" />
+
+        <!-- Sport Category Value TextView -->
+        <TextView
+            android:id="@+id/tv_exercises"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Push ups, Dips, Muscle ups"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsregular"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp" />
+
+        <!-- Additional Equipments Title TextView -->
+        <TextView
+            android:id="@+id/tv_additionalEquipmentTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Additional Equipment"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="16sp" />
+
+        <!-- Sport Category Value TextView -->
+        <TextView
+            android:id="@+id/tv_additionalEquipment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gloves, Water, Food"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsregular"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp" />
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -62,11 +62,18 @@ class NewInvitesFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        invitesAdapter = NewInvitesAdapter(emptyList<Pair<TrainingInvite, Map<String, Any?>>>()) { inviteId ->
-            // Call ViewModel method to decline the invite
-            newInvitesViewModel.declineInvite(inviteId, userId)
-        }
+        invitesAdapter = NewInvitesAdapter(emptyList<Pair<TrainingInvite, Map<String, Any?>>>(), ::handleDeclineInvite, ::showInviteDetailsDialog)
         binding.rvNewInvites.adapter = invitesAdapter
+    }
+
+    private fun handleDeclineInvite(inviteId: String) {
+        newInvitesViewModel.declineInvite(inviteId, userId)
+    }
+
+    private fun showInviteDetailsDialog(invite: TrainingInvite) {
+        newInvitesViewModel.selectInvite(invite)
+        val dialog = NewInviteInfoDialogFragment()
+        dialog.show(parentFragmentManager, "NewInviteInfoDialog")
     }
 
     override fun onResume() {
