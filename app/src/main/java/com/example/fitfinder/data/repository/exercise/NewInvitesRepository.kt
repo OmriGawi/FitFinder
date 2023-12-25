@@ -3,6 +3,7 @@ package com.example.fitfinder.data.repository.exercise
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.fitfinder.data.model.TrainingInvite
+import com.example.fitfinder.data.model.TrainingSession
 import com.example.fitfinder.data.repository.BaseRepository
 import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.android.gms.tasks.Tasks
@@ -82,6 +83,44 @@ class NewInvitesRepository : BaseRepository() {
                 Log.e(TAG, "Failed to decline invite: ", e)
                 onComplete(false)
             }
+    }
+
+    fun acceptInvite(invite: TrainingInvite, userId: String, onComplete: (Boolean) -> Unit) {
+        val inviteRef = db.collection("invites").document(invite.id)
+        val receiverRef = db.collection("users").document(userId)
+        val senderRef = db.collection("users").document(invite.senderId)
+        val trainingSessionRef = db.collection("training_sessions").document()
+
+        db.runTransaction { transaction ->
+            // Remove the invite from the receiver's invites array
+            transaction.update(receiverRef, "invites", FieldValue.arrayRemove(invite.id))
+
+            // Delete the invite document
+            transaction.delete(inviteRef)
+
+            // Create a new document in training_sessions
+            val trainingSession = TrainingSession(
+                id = trainingSessionRef.id,
+                senderId = invite.senderId,
+                receiverId = invite.receiverId,
+                sportCategory = invite.sportCategory,
+                exercises = invite.exercises,
+                dateTime = invite.dateTime,
+                location = invite.location,
+                additionalEquipment = invite.additionalEquipment,
+                createdAt = invite.createdAt
+                // Additional fields can be added as needed
+            )
+            transaction.set(trainingSessionRef, trainingSession)
+
+            // Add the reference to the new training session in both users' documents
+            transaction.update(receiverRef, "trainingSessions", FieldValue.arrayUnion(trainingSessionRef.id))
+            transaction.update(senderRef, "trainingSessions", FieldValue.arrayUnion(trainingSessionRef.id))
+        }.addOnSuccessListener {
+            onComplete(true)
+        }.addOnFailureListener {
+            onComplete(false)
+        }
     }
 }
 

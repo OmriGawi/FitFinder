@@ -5,8 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fitfinder.R
+import com.example.fitfinder.data.repository.calendar.CalendarRepository
 import com.example.fitfinder.databinding.FragmentCalendarBinding
+import com.example.fitfinder.util.SharedPreferencesUtil
+import com.example.fitfinder.viewmodel.ViewModelFactory
+import com.example.fitfinder.viewmodel.calendar.CalendarViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,6 +21,13 @@ class CalendarFragment : Fragment() {
     // binding
     private lateinit var binding: FragmentCalendarBinding
 
+    // variables
+    private lateinit var calendarViewModel: CalendarViewModel
+    private lateinit var userId: String
+
+    // adapters
+    private val eventsAdapter = CalendarAdapter(emptyList())
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCalendarBinding.inflate(inflater, container, false)
         return binding.root
@@ -22,6 +35,11 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Initialize view models
+        calendarViewModel = ViewModelProvider(requireActivity(), ViewModelFactory(CalendarRepository()))[CalendarViewModel::class.java]
+
+        userId = SharedPreferencesUtil.getUserId(requireContext()).toString()
 
         // Set the current date as default
         binding.tvSelectedDate.text = getCurrentFormattedDate()
@@ -34,6 +52,21 @@ class CalendarFragment : Fragment() {
         // Set a listener for create a new event
         binding.btnCreateEvent.setOnClickListener{
             navigateToCalendarCreateEvent()
+        }
+
+        // Fetch events
+        calendarViewModel.fetchCalendarEvents(userId)
+
+        // Initialize the RecyclerView
+        binding.rvEvents.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = eventsAdapter
+        }
+
+        // Observe calendar events
+        calendarViewModel.calendarEvents.observe(viewLifecycleOwner) { events ->
+            // Update your RecyclerView adapter here with the events
+            eventsAdapter.updateData(events)
         }
     }
 

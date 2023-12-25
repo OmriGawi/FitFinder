@@ -62,12 +62,21 @@ class NewInvitesFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        invitesAdapter = NewInvitesAdapter(emptyList<Pair<TrainingInvite, Map<String, Any?>>>(), ::handleDeclineInvite, ::showInviteDetailsDialog)
+        invitesAdapter = NewInvitesAdapter(
+            emptyList<Pair<TrainingInvite, Map<String, Any?>>>(),
+            ::handleDeclineInvite,
+            ::handleAcceptInvite,
+            ::showInviteDetailsDialog
+        )
         binding.rvNewInvites.adapter = invitesAdapter
     }
 
     private fun handleDeclineInvite(inviteId: String) {
         newInvitesViewModel.declineInvite(inviteId, userId)
+    }
+
+    private fun handleAcceptInvite(invite: TrainingInvite) {
+        newInvitesViewModel.acceptInvite(invite, userId)
     }
 
     private fun showInviteDetailsDialog(invite: TrainingInvite) {

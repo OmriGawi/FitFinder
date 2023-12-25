@@ -35,9 +35,22 @@ class NewInvitesViewModel(private val repository: NewInvitesRepository) : ViewMo
                 // Remove the declined invite from the LiveData list
                 val updatedInvites = _invitesWithDetails.value?.filterNot { it.first.id == inviteId }
                 _invitesWithDetails.postValue(updatedInvites)
-                _toastMessageEvent.value = Event(Pair("Removed successfully!", ToastyType.SUCCESS))
+                _toastMessageEvent.value = Event(Pair("Invite declined successfully!", ToastyType.SUCCESS))
             } else {
                 _toastMessageEvent.value = Event(Pair("Failed to remove invite.", ToastyType.ERROR))
+            }
+        }
+    }
+
+    fun acceptInvite(invite: TrainingInvite, userId: String) {
+        repository.acceptInvite(invite, userId) { success ->
+            if (success) {
+                // Update the LiveData to remove the accepted invite
+                val updatedInvites = _invitesWithDetails.value?.filterNot { it.first.id == invite.id }
+                _invitesWithDetails.postValue(updatedInvites)
+                _toastMessageEvent.value = Event(Pair("Invite accepted successfully!", ToastyType.SUCCESS))
+            } else {
+                _toastMessageEvent.value = Event(Pair("Failed to accept invite.", ToastyType.ERROR))
             }
         }
     }
