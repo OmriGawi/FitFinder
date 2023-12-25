@@ -47,6 +47,7 @@ class CalendarFragment : Fragment() {
         // Set a listener for date change on CalendarView
         binding.cvCalendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
             binding.tvSelectedDate.text = formatDate(year, month, dayOfMonth)
+            calendarViewModel.setSelectedDate(year, month, dayOfMonth)
         }
 
         // Set a listener for create a new event
@@ -63,9 +64,8 @@ class CalendarFragment : Fragment() {
             adapter = eventsAdapter
         }
 
-        // Observe calendar events
-        calendarViewModel.calendarEvents.observe(viewLifecycleOwner) { events ->
-            // Update your RecyclerView adapter here with the events
+        // Observe the filtered events LiveData instead of all events
+        calendarViewModel.filteredCalendarEvents.observe(viewLifecycleOwner) { events ->
             eventsAdapter.updateData(events)
         }
     }
