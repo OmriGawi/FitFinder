@@ -34,7 +34,7 @@ class CalendarAdapter (private var events: List<TrainingSession>) : RecyclerView
     override fun getItemCount() = events.size
 
     fun updateData(newEvents: List<TrainingSession>) {
-        this.events = newEvents
+        this.events = newEvents.sortedBy { it.dateTime.toDate() }
         notifyDataSetChanged()
     }
 }
