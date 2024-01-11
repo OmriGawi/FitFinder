@@ -22,8 +22,6 @@ The project uses MVVM architecture pattern.
   results to UI
 * [Navigation Component](https://developer.android.com/guide/navigation/navigation-getting-started)
   - Android Jetpack's Navigation component helps in implementing navigation between fragments
-* [Dagger Hilt](https://developer.android.com/jetpack/androidx/releases/hilt) - For Dependency
-  Injection.
 * [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines) - Asynchronous programming
 * [Firebase](https://firebase.google.com/) - To store data
 
