@@ -29,9 +29,32 @@ The project uses MVVM architecture pattern.
 
 ## Screenshots
 
-|<img src="screenshots/Login.png" width=200/>|<img src="screenshots/Register.png" width=200/>|
-|<img src="screenshots/Profile.png" width=200/>|
-|:----:|:----:|
+
+## Screenshots
+
+### Login | Register
+| <img src="screenshots/Login.png" width="200"/> | <img src="screenshots/Register.png" width="200"/> |
+|:---:|:---:|
+
+### Profile
+<p align="center">
+  <img src="screenshots/Profile.png" width="200"/>
+</p>
+
+### Messages | Chat
+| <img src="screenshots/Messages.png" width="200"/> | <img src="screenshots/Chat.png" width="200"/> |
+|:---:|:---:|
+
+### Calendar | Create Event
+| <img src="screenshots/Calendar.png" width="200"/> | <img src="screenshots/Creat Event.png" width="200"/> |
+|:---:|:---:|
+
+### Exercise
+<p align="center">
+  <img src="screenshots/Exercise.png" width="200"/>
+</p>
+
+
 
 
 
