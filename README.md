@@ -28,8 +28,6 @@ The project uses MVVM architecture pattern.
 ## Screenshots
 
 
-## Screenshots
-
 ### Login | Register
 | <img src="screenshots/Login.png" width="200"/> | <img src="screenshots/Register.png" width="200"/> |
 |:---:|:---:|
@@ -42,7 +40,7 @@ The project uses MVVM architecture pattern.
 |:---:|:---:|
 
 ### Calendar | Create Event
-| <img src="screenshots/Calendar.png" width="200"/> | <img src="screenshots/Creat Event.png" width="200"/> |
+| <img src="screenshots/Calendar.png" width="200"/> | <img src="screenshots/CreatEvent.png" width="200"/> |
 |:---:|:---:|
 
 ### Exercise
