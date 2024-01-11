@@ -2,11 +2,6 @@
 
 Matching app based on the MVVM architecture using Kotlin, ViewModel, LiveData, Coroutines, Navigation and more.
 
-### Prerequisites
-
-The project has all required dependencies in the gradle files. Add the Project to Android Studio or
-Intelij and build.All the required dependencies will be downloaded and installed.
-
 ## Architecture
 
 The project uses MVVM architecture pattern.
