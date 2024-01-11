@@ -11,7 +11,7 @@ Intelij and build.All the required dependencies will be downloaded and installed
 
 The project uses MVVM architecture pattern.
 
-<img src="screenshots/Architecture.jpg" width=200/>
+<img src="screenshots/Architecture.jpg"/>
 
 ## Libraries
 
@@ -40,7 +40,7 @@ The project uses MVVM architecture pattern.
 |:---:|:---:|
 
 ### Calendar | Create Event
-| <img src="screenshots/Calendar.png" width="200"/> | <img src="screenshots/CreatEvent.png" width="200"/> |
+| <img src="screenshots/Calendar.png" width="200"/> | <img src="screenshots/CreateEvent.png" width="200"/> |
 |:---:|:---:|
 
 ### Exercise
