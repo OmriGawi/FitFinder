@@ -12,25 +12,25 @@ Intelij and build.All the required dependencies will be downloaded and installed
 The project uses MVVM architecture pattern.
 
 FitFinder/
-└── app/
-    └── java/
-        └── com.example.fitfinder/
-            ├── data/
-            │   ├── model/
-            │   ├── repository/
-            │   └── service/
-            ├── ui/
-            │   ├── auth/
-            │   ├── calendar/
-            │   ├── exercise/
-            │   ├── messages/
-            │   ├── profile/
-            │   └── search/
-            ├── MainActivity.kt
-            ├── util/
-            └── viewmodel/
-    └── com.example.fitfinder (androidTest)/
-    └── com.example.fitfinder (test)/
+├── app/
+│ └── java/
+│ └── com.example.fitfinder/
+│ ├── data/
+│ │ ├── model/
+│ │ ├── repository/
+│ │ └── service/
+│ ├── ui/
+│ │ ├── auth/
+│ │ ├── calendar/
+│ │ ├── exercise/
+│ │ ├── messages/
+│ │ ├── profile/
+│ │ └── search/
+│ ├── MainActivity.kt
+│ ├── util/
+│ └── viewmodel/
+├── com.example.fitfinder (androidTest)/
+└── com.example.fitfinder (test)/
 
 
 ## Libraries
