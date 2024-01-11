@@ -37,9 +37,7 @@ The project uses MVVM architecture pattern.
 |:---:|:---:|
 
 ### Profile
-<p align="center">
-  <img src="screenshots/Profile.png" width="200"/>
-</p>
+<img src="screenshots/Profile.png" width="200"/>
 
 ### Messages | Chat
 | <img src="screenshots/Messages.png" width="200"/> | <img src="screenshots/Chat.png" width="200"/> |
@@ -50,9 +48,7 @@ The project uses MVVM architecture pattern.
 |:---:|:---:|
 
 ### Exercise
-<p align="center">
-  <img src="screenshots/Exercise.png" width="200"/>
-</p>
+<img src="screenshots/Exercise.png" width="200"/>
 
 
 
