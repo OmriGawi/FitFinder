@@ -17,6 +17,18 @@ class CalendarViewModel(private val repository: CalendarRepository) : ViewModel(
     private val _filteredCalendarEvents = MediatorLiveData<List<TrainingSession>>()
     val filteredCalendarEvents: LiveData<List<TrainingSession>> get() = _filteredCalendarEvents
 
+    private val _selectedTrainingSession = MutableLiveData<TrainingSession>()
+    val selectedTrainingSession: LiveData<TrainingSession> = _selectedTrainingSession
+
+    fun selectTrainingSession(trainingSession: TrainingSession) {
+        _selectedTrainingSession.value = trainingSession
+    }
+
+    fun resetSelectedDateToCurrent() {
+        _selectedDate.value = Calendar.getInstance().time
+    }
+
+
     init {
         // Initialize with the current date
         _selectedDate.value = Calendar.getInstance().time

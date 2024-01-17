@@ -4,17 +4,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitfinder.R
 import com.example.fitfinder.data.model.TrainingSession
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CalendarAdapter (private var events: List<TrainingSession>) : RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
+class CalendarAdapter (
+    private var events: List<TrainingSession>,
+    private val onInfoClicked: (TrainingSession) -> Unit
+    ) : RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvSportCategory: TextView = view.findViewById(R.id.tv_sportCategory)
         val tvTime: TextView = view.findViewById(R.id.tv_time)
+        val item: ConstraintLayout = view.findViewById(R.id.item_calendar)
         // Add other views you might need
     }
 
@@ -26,9 +31,13 @@ class CalendarAdapter (private var events: List<TrainingSession>) : RecyclerView
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val event = events[position]
         holder.tvSportCategory.text = event.sportCategory
+
         holder.tvTime.text = SimpleDateFormat("hh:mm a", Locale.US).format(event.dateTime.toDate())
 
-        // Bind other event information to the views
+        holder.item.setOnClickListener {
+            onInfoClicked(event)
+        }
+
     }
 
     override fun getItemCount() = events.size

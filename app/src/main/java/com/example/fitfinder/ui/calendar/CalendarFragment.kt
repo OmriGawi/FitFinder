@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fitfinder.R
+import com.example.fitfinder.data.model.TrainingSession
 import com.example.fitfinder.data.repository.calendar.CalendarRepository
 import com.example.fitfinder.databinding.FragmentCalendarBinding
 import com.example.fitfinder.util.SharedPreferencesUtil
@@ -26,7 +27,7 @@ class CalendarFragment : Fragment() {
     private lateinit var userId: String
 
     // adapters
-    private val eventsAdapter = CalendarAdapter(emptyList())
+    private val eventsAdapter = CalendarAdapter(emptyList(),::showTrainingSessionDialog)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCalendarBinding.inflate(inflater, container, false)
@@ -64,10 +65,17 @@ class CalendarFragment : Fragment() {
             adapter = eventsAdapter
         }
 
+
         // Observe the filtered events LiveData instead of all events
         calendarViewModel.filteredCalendarEvents.observe(viewLifecycleOwner) { events ->
             eventsAdapter.updateData(events)
         }
+    }
+
+    private fun showTrainingSessionDialog(trainingSession: TrainingSession) {
+        calendarViewModel.selectTrainingSession(trainingSession)
+        val dialog = CalendarTrainingSessionDialogFragment()
+        dialog.show(parentFragmentManager, "CalendarTrainingSessionDialog")
     }
 
     // Function to get the current formatted date
@@ -95,6 +103,16 @@ class CalendarFragment : Fragment() {
             .addToBackStack(null)
             .commit()
     }
+
+    override fun onResume() {
+        super.onResume()
+        // Reset the selected date to the current date
+        calendarViewModel.resetSelectedDateToCurrent()
+
+        // Fetch events for the current date
+        calendarViewModel.fetchCalendarEvents(userId)
+    }
+
 
 
 }
