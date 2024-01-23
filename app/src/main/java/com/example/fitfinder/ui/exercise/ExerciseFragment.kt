@@ -47,7 +47,6 @@ class ExerciseFragment : Fragment() {
             .commit()
     }
 
-    // You need to create similar methods for the other fragments
     private fun navigateToProgress() {
         // Replace with actual fragment class and ID
     }
@@ -57,6 +56,10 @@ class ExerciseFragment : Fragment() {
     }
 
     private fun navigateToUnfilledReports() {
-        // Replace with actual fragment class and ID
+        val unfilledReportsFragment = UnfilledReportsFragment()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, unfilledReportsFragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

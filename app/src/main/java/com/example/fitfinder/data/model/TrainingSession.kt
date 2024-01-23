@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp
 import java.util.*
 
 data class TrainingSession(
-    val id: String = "",
+    var id: String = "",
     val senderId: String = "",
     val receiverId: String = "",
     val sportCategory: String = "",
@@ -12,8 +12,7 @@ data class TrainingSession(
     val dateTime: Timestamp = Timestamp(Date()),
     val location: String = "",
     val additionalEquipment: String = "",
-    val createdAt: Timestamp = Timestamp.now()
-    // Future fields for tracking progress, etc.
-    // Example: val progress: Map<String, Any> = mapOf()
+    val createdAt: Timestamp = Timestamp.now(),
+    val reportStatus: Map<String, Boolean> = emptyMap()
 )
 
