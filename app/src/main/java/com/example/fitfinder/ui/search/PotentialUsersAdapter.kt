@@ -14,16 +14,18 @@ import com.example.fitfinder.data.model.PotentialUser
 
 class PotentialUsersAdapter(
     private var users: List<PotentialUser>,
-    private val actionCallback: CardActionCallback
+    private val actionCallback: CardActionCallback,
 ) : RecyclerView.Adapter<PotentialUsersAdapter.UserViewHolder>() {
 
     interface CardActionCallback {
         fun onLikeClicked()
         fun onDislikeClicked()
+        fun onInfoClicked(user: PotentialUser)
     }
 
     inner class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val ivProfilePicture: ImageView = view.findViewById(R.id.iv_profilePicture)
+        val ivInfo: ImageView = view.findViewById(R.id.iv_info)
         val tvFullNameAndAge: TextView = view.findViewById(R.id.tv_fullNameAndAge)
         val tvDistance: TextView = view.findViewById(R.id.tv_distance)
         val tvWorkoutTimes: TextView = view.findViewById(R.id.tv_workoutTimes)
@@ -56,6 +58,10 @@ class PotentialUsersAdapter(
 
         holder.btnDislike.setOnClickListener {
             actionCallback.onDislikeClicked()
+        }
+
+        holder.ivInfo.setOnClickListener {
+            actionCallback.onInfoClicked(user)
         }
     }
 

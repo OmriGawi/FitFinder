@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import androidx.lifecycle.ViewModelProvider
+import com.example.fitfinder.R
 import com.example.fitfinder.data.model.PotentialUser
 import com.example.fitfinder.data.repository.search.SearchRepository
 import com.example.fitfinder.databinding.FragmentPotentialUsersBinding
 import com.example.fitfinder.ui.MainActivity
+import com.example.fitfinder.ui.profile.ProfileViewFragment
 import com.example.fitfinder.util.SharedPreferencesUtil
 import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.search.SearchViewModel
@@ -79,6 +81,35 @@ class PotentialUsersFragment :
             .build()
         cardStackLayoutManager.setSwipeAnimationSetting(setting)
         binding.cardStackView.swipe()
+    }
+
+    override fun onInfoClicked(user: PotentialUser) {
+        val bundle = createUserProfileBundle(user) // Create a bundle with user details
+        val profileViewFragment = ProfileViewFragment()
+        profileViewFragment.arguments = bundle
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, profileViewFragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun createUserProfileBundle(user: PotentialUser): Bundle {
+        val bundle = Bundle()
+        bundle.putString("firstName", user.firstName)
+        bundle.putString("lastName", user.lastName)
+        bundle.putString("profilePictureUrl", user.profilePictureUrl)
+        bundle.putString("userType", user.userType.toString())
+
+        val workoutTimesStr = user.workoutTimes.joinToString(separator = ",") { it.name }
+        bundle.putString("workoutTimes", workoutTimesStr)
+
+        // Convert each SportCategory into a String representation
+        val sportCategoriesStrList = user.sportCategories.map { "${it.name}|${it.skillLevel}" }
+        bundle.putStringArrayList("sportCategories", ArrayList(sportCategoriesStrList))
+
+        bundle.putStringArrayList("additionalPictures", ArrayList(user.additionalPictures))
+
+        return bundle
     }
 
     override fun onCardSwiped(direction: Direction) {
