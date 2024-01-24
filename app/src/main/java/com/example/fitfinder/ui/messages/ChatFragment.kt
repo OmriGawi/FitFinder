@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.fitfinder.R
 import com.example.fitfinder.data.model.Message
+import com.example.fitfinder.data.model.PotentialUser
 import com.example.fitfinder.data.repository.messages.ChatRepository
 import com.example.fitfinder.databinding.FragmentChatBinding
 import com.example.fitfinder.ui.MainActivity
+import com.example.fitfinder.ui.profile.ProfileViewFragment
 import com.example.fitfinder.util.SharedPreferencesUtil
 import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.messages.ChatViewModel
@@ -25,6 +28,8 @@ class ChatFragment : Fragment() {
     private lateinit var matchesViewModel: MatchesViewModel
     private lateinit var chatViewModel: ChatViewModel
     private lateinit var chatAdapter: ChatAdapter
+
+    private lateinit var potentialUser: PotentialUser
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentChatBinding.inflate(inflater, container, false)
@@ -48,7 +53,7 @@ class ChatFragment : Fragment() {
         // Observe the selected match and user
         matchesViewModel.selectedMatchWithUser.observe(viewLifecycleOwner) { matchWithUser ->
             val match = matchWithUser.first
-            val potentialUser = matchWithUser.second
+            potentialUser = matchWithUser.second
 
             // Set the name of the user in the TextView
             binding.tvUserName.text = potentialUser.firstName
@@ -102,6 +107,46 @@ class ChatFragment : Fragment() {
             }
         }
 
+        binding.ivProfilePicture.setOnClickListener {
+            navigateToViewProfile()
+        }
+
+        binding.tvUserName.setOnClickListener {
+            navigateToViewProfile()
+        }
+
+    }
+
+    private fun navigateToViewProfile() {
+        val profileViewFragment = ProfileViewFragment()
+
+        // Get Bundle from ViewModel and set as Fragment arguments
+        val bundle = createUserProfileBundle(potentialUser)
+        profileViewFragment.arguments = bundle
+
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, profileViewFragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun createUserProfileBundle(user: PotentialUser): Bundle {
+        val bundle = Bundle()
+        bundle.putString("firstName", user.firstName)
+        bundle.putString("lastName", user.lastName)
+        bundle.putString("profilePictureUrl", user.profilePictureUrl)
+        bundle.putString("userType", user.userType.toString())
+
+        val workoutTimesStr = user.workoutTimes.joinToString(separator = ",") { it.name }
+        bundle.putString("workoutTimes", workoutTimesStr)
+
+        // Convert each SportCategory into a String representation
+        val sportCategoriesStrList = user.sportCategories.map { "${it.name}|${it.skillLevel}" }
+        bundle.putStringArrayList("sportCategories", ArrayList(sportCategoriesStrList))
+
+        bundle.putStringArrayList("additionalPictures", ArrayList(user.additionalPictures))
+
+        return bundle
     }
 
     override fun onDestroyView() {
