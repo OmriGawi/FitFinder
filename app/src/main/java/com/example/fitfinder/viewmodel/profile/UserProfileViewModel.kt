@@ -1,6 +1,7 @@
 package com.example.fitfinder.viewmodel.profile
 
 import android.net.Uri
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,12 +9,16 @@ import com.example.fitfinder.data.model.*
 import com.example.fitfinder.data.repository.profile.UserProfileRepository
 import com.example.fitfinder.util.Event
 import com.example.fitfinder.util.ToastyType
+import com.google.firebase.Timestamp
 
 class UserProfileViewModel(private val repository: UserProfileRepository) : ViewModel() {
 
     // Variables
     private val _userProfile = MutableLiveData<UserProfile>()
     val userProfile: LiveData<UserProfile> get() = _userProfile
+
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User> get() = _user
 
     private val _toastMessageEvent = MutableLiveData<Event<Pair<String, ToastyType>>>()
     val toastMessageEvent: LiveData<Event<Pair<String, ToastyType>>> get() = _toastMessageEvent
@@ -23,6 +28,16 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
 
     fun fetchUserProfile(userId: String) {
         repository.getUserProfile(userId).addOnSuccessListener { document ->
+
+            val user = User(
+                userId = userId,
+                firstName = document.get("firstName") as String,
+                lastName = document.get("lastName") as String,
+                birthDate = document.get("birthDate") as Timestamp,
+                email = document.get("email") as String,
+            )
+            _user.postValue(user)
+
             var userProfileMap = document.get("userProfile") as? MutableMap<String, Any>
 
             // If userProfileMap is null (i.e., no user profile exists) or the profilePictureUrl field is missing or empty
@@ -41,7 +56,6 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         }
     }
 
-
     private fun createUserProfile(userProfileMap: MutableMap<String, Any>?, userId: String) {
         val profile = UserProfile(
             userId = userId,
@@ -59,6 +73,34 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         )
         _userProfile.postValue(profile)
     }
+
+    fun createUserProfileBundle(): Bundle {
+        val bundle = Bundle()
+
+        _user.value?.let { user ->
+            bundle.putString("firstName", user.firstName)
+            bundle.putString("lastName", user.lastName)
+            // ... add other fields from user ...
+        }
+
+        _userProfile.value?.let { userProfile ->
+            bundle.putString("profilePictureUrl", userProfile.profilePictureUrl)
+            bundle.putString("userType", userProfile.userType.toString())
+
+            val workoutTimesStr = userProfile.workoutTimes.joinToString(separator = ",") { it.name }
+            bundle.putString("workoutTimes", workoutTimesStr)
+
+            // Convert each SportCategory into a String representation
+            val sportCategoriesStrList = userProfile.sportCategories.map { "${it.name}|${it.skillLevel}" }
+            bundle.putStringArrayList("sportCategories", ArrayList(sportCategoriesStrList))
+
+            bundle.putStringArrayList("additionalPictures", ArrayList(userProfile.additionalPictures))
+        }
+
+        return bundle
+    }
+
+
 
     fun updateProfilePictureUrl(userId: String, uri: Uri) {
         _isLoading.postValue(true)  // Show the ProgressBar

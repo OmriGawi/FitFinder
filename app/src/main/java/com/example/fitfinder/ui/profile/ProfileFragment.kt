@@ -165,6 +165,11 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
             }
         })
 
+        binding.tvViewProfile.setOnClickListener{
+            navigateToViewProfile()
+        }
+
+
         binding.ivAdd.setOnClickListener {
             val dialog = SportCategoryDialogFragment()
             dialog.show(parentFragmentManager, "SportCategoryDialog")
@@ -175,7 +180,6 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
                 userProfileViewModel.updateUserDescription(binding.etDescription.text.toString())
             }
         }
-
 
         binding.ivAddAdditional.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
@@ -192,6 +196,20 @@ class ProfileFragment : Fragment(), AdditionalPicturesAdapter.OnImageRemovedList
         }
 
     }
+
+    private fun navigateToViewProfile() {
+        val profileViewFragment = ProfileViewFragment()
+
+        // Get Bundle from ViewModel and set as Fragment arguments
+        val bundle = userProfileViewModel.createUserProfileBundle()
+        profileViewFragment.arguments = bundle
+
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, profileViewFragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
 
     override fun onResume() {
         super.onResume()

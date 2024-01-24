@@ -81,6 +81,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/tv_workoutTimes"
                         android:text="Morning, Evening"
                         android:fontFamily="@font/poppinssemibold"
                         android:textColor="@color/white"
@@ -185,13 +186,14 @@
             android:orientation="vertical"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginTop="25dp">
+            android:layout_marginTop="8dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_additionalPictures"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_marginTop="10dp"
+
                 android:scrollbars="vertical"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2">
