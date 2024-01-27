@@ -108,7 +108,8 @@ class NewInvitesRepository : BaseRepository() {
                 dateTime = invite.dateTime,
                 location = invite.location,
                 additionalEquipment = invite.additionalEquipment,
-                createdAt = invite.createdAt
+                createdAt = invite.createdAt,
+                reportStatus = mapOf(invite.senderId to false, invite.receiverId to false)
                 // Additional fields can be added as needed
             )
             transaction.set(trainingSessionRef, trainingSession)

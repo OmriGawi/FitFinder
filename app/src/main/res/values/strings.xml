@@ -63,6 +63,7 @@
     <string name="new_invite_request">New invite request</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
+    <string name="fill_report">Fill Report</string>
 
 
     <string-array name="radius_values">
