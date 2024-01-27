@@ -21,7 +21,7 @@
             android:id="@+id/tv_inviteTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please Fill Your Exercises progress"
+            android:text="Please Fill Your Exercises Progress"
             android:layout_gravity="center"
             android:textColor="@color/primaryColor"
             android:fontFamily="@font/poppinssemibold"
