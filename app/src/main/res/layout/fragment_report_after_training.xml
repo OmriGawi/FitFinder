@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="10dp">
+
+    <!-- Content Layout -->
+    <LinearLayout
+        android:id="@+id/layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp">
+
+        <!-- Title TextView -->
+        <TextView
+            android:id="@+id/tv_inviteTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please Fill Your Exercises progress"
+            android:layout_gravity="center"
+            android:textColor="@color/primaryColor"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="20sp" />
+
+        <!-- Partner Title TextView -->
+        <TextView
+            android:id="@+id/tv_partnerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Partner"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="16sp" />
+
+        <!-- Partner Value TextView -->
+        <TextView
+            android:id="@+id/tv_partner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Omri Gal"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsregular"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp" />
+
+        <!-- Date & Time Title TextView -->
+        <TextView
+            android:id="@+id/tv_timeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date &amp; Time"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="16sp" />
+
+        <!-- Date & Time Value TextView -->
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DEC, 16 2024 4:10 PM"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsregular"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp" />
+
+        <!-- Location Title TextView -->
+        <TextView
+            android:id="@+id/tv_locationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="16sp" />
+
+        <!-- Location Value TextView -->
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yarkon Park"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsregular"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp" />
+
+        <!-- Sport Category Title TextView -->
+        <TextView
+            android:id="@+id/tv_sportCategoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sport Category"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="16sp" />
+
+        <!-- Sport Category Value TextView -->
+        <TextView
+            android:id="@+id/tv_sportCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calisthenics"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsregular"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp" />
+
+        <!-- Exercises Title TextView -->
+        <TextView
+            android:id="@+id/exercisesTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exercises"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="16sp" />
+
+        <!-- Exercises RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_exercises"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/recycler_item_report_after_training"/>
+
+        <!-- Additional Equipments Title TextView -->
+        <TextView
+            android:id="@+id/tv_additionalEquipmentTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Additional Equipment"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="16sp" />
+
+        <!-- Sport Category Value TextView -->
+        <TextView
+            android:id="@+id/tv_additionalEquipment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gloves, Water, Food"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsregular"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp" />
+
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="140dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="25dp"
+            android:text="@string/submit"
+            android:textAllCaps="false"
+            android:background="@drawable/btn_shape_app"
+            app:backgroundTint="@null"
+            android:padding="1dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/poppinsbold"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</ScrollView>

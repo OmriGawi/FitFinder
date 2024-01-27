@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fitfinder.R
 import com.example.fitfinder.data.model.TrainingSession
 import com.example.fitfinder.data.repository.exercise.UnfilledReportsRepository
 import com.example.fitfinder.databinding.FragmentUnfilledReportsBinding
@@ -47,6 +48,16 @@ class UnfilledReportsFragment : Fragment() {
 
     }
 
+    private fun navigateToReportAfterTraining() {
+        val reportAfterTrainingFragment = ReportAfterTrainingFragment()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, reportAfterTrainingFragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+
+
     private fun setupRecyclerView() {
         unfilledReportsAdapter = UnfilledReportsAdapter(emptyList(), ::handleFillReportClicked)
         binding.rvUnfilledReports.apply {
@@ -55,9 +66,9 @@ class UnfilledReportsFragment : Fragment() {
         }
     }
 
-    private fun handleFillReportClicked(trainingSession: TrainingSession) {
-        // TODO: Navigate to the fill report screen and pass the TrainingSession object
-        // You can use a DialogFragment or navigate to another Fragment/Activity based on your app's flow
+    private fun handleFillReportClicked(trainingSession: TrainingSession, partnerDetails: Map<String, Any?>) {
+        unfilledReportsViewModel.selectReport(trainingSession, partnerDetails)
+        navigateToReportAfterTraining()
     }
 
     override fun onResume() {

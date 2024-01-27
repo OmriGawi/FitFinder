@@ -15,7 +15,7 @@ import java.util.*
 
 class UnfilledReportsAdapter(
     private var reportsWithDetails: List<Pair<TrainingSession, Map<String, Any?>>>,
-    private val onFillReportClicked: (TrainingSession) -> Unit
+    private val onFillReportClicked: (TrainingSession, Map<String, Any?>) -> Unit
 ) : RecyclerView.Adapter<UnfilledReportsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -39,7 +39,7 @@ class UnfilledReportsAdapter(
             .into(holder.ivPicture)
 
         holder.btnFillReport.setOnClickListener {
-            onFillReportClicked(report)
+            onFillReportClicked(report, partnerDetails)
         }
     }
 

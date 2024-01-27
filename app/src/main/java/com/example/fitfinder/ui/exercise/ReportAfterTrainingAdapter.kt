@@ -1,0 +1,40 @@
+package com.example.fitfinder.ui.exercise
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.fitfinder.R
+
+class ReportAfterTrainingAdapter(
+    private var exercises: List<String>
+) : RecyclerView.Adapter<ReportAfterTrainingAdapter.ViewHolder>() {
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val tvExerciseName: TextView = view.findViewById(R.id.tv_exerciseName)
+        val etExerciseDetail: EditText = view.findViewById(R.id.et_exerciseDetail)
+        // ... other views if needed
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.recycler_item_report_after_training, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val exercise = exercises[position]
+        holder.tvExerciseName.text = exercise
+        // Other data binding if needed
+    }
+
+    override fun getItemCount() = exercises.size
+
+    // Function to update the exercises list
+    fun updateData(newExercises: List<String>) {
+        exercises = newExercises
+        notifyDataSetChanged()
+    }
+}
