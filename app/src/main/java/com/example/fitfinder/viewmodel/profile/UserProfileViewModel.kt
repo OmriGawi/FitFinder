@@ -76,6 +76,7 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
 
     fun createUserProfileBundle(): Bundle {
         val bundle = Bundle()
+        bundle.putString("screen", "Profile")
 
         _user.value?.let { user ->
             bundle.putString("firstName", user.firstName)

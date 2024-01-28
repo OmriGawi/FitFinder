@@ -18,6 +18,8 @@ class ProfileViewFragment: Fragment() {
     // binding
     private lateinit var binding: FragmentProfileViewBinding
 
+    private lateinit var screenName: String
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentProfileViewBinding.inflate(inflater, container, false)
         return binding.root
@@ -28,6 +30,8 @@ class ProfileViewFragment: Fragment() {
 
         // Retrieve the arguments
         val args = arguments
+
+        screenName = args?.getString("screen").toString()
 
         // Retrieve and set user fields
         val firstName = args?.getString("firstName", "")
@@ -121,6 +125,6 @@ class ProfileViewFragment: Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         (activity as MainActivity).enableBackButton(false)
-        (activity as MainActivity).setTitle("Profile")
+        (activity as MainActivity).setTitle(screenName)
     }
 }

@@ -95,6 +95,7 @@ class PotentialUsersFragment :
 
     private fun createUserProfileBundle(user: PotentialUser): Bundle {
         val bundle = Bundle()
+        bundle.putString("screen", "Search")
         bundle.putString("firstName", user.firstName)
         bundle.putString("lastName", user.lastName)
         bundle.putString("profilePictureUrl", user.profilePictureUrl)

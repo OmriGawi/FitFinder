@@ -132,6 +132,7 @@ class ChatFragment : Fragment() {
 
     private fun createUserProfileBundle(user: PotentialUser): Bundle {
         val bundle = Bundle()
+        bundle.putString("screen", "Messages")
         bundle.putString("firstName", user.firstName)
         bundle.putString("lastName", user.lastName)
         bundle.putString("profilePictureUrl", user.profilePictureUrl)
