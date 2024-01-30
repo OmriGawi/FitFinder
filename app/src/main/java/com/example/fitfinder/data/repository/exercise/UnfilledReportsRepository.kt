@@ -2,9 +2,11 @@ package com.example.fitfinder.data.repository.exercise
 
 import android.util.Log
 import com.example.fitfinder.data.model.TrainingSession
+import com.example.fitfinder.data.model.TrainingSessionReport
 import com.example.fitfinder.data.repository.BaseRepository
 import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.android.gms.tasks.Tasks
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
@@ -25,7 +27,9 @@ class UnfilledReportsRepository: BaseRepository() {
                         val trainingSession = document.toObject(TrainingSession::class.java)?.apply {
                             id = document.id // Set the document ID here
                         }
-                        if (trainingSession != null && trainingSession.dateTime.toDate().before(currentDate)) {
+                        if (trainingSession != null &&
+                            trainingSession.dateTime.toDate().before(currentDate) &&
+                            trainingSession.reportStatus[userId] == false) {
                             // Determine the partner's userId
                             val partnerId = if (trainingSession.senderId == userId) trainingSession.receiverId else trainingSession.senderId
 
@@ -61,6 +65,39 @@ class UnfilledReportsRepository: BaseRepository() {
             Log.w("UnfilledReportsRepository", "Error fetching training sessions: ", e)
         }
     }
+
+    fun submitReport(userId: String, trainingSession: TrainingSession, reportDetails: Map<String, String>, onComplete: (Boolean) -> Unit) {
+
+        val report = TrainingSessionReport(
+            userId = userId,
+            trainingSessionId = trainingSession.id,
+            reportDetails = reportDetails,
+            createdAt = trainingSession.dateTime // Use the session dateTime as the createdAt timestamp
+        )
+
+        // Reference to the training_sessions_reports collection
+        val reportRef = db.collection("training_sessions_reports").document()
+
+        // Start a batch operation to ensure atomicity
+        val batch = db.batch()
+
+        // Add the report to the batch
+        batch.set(reportRef, report)
+
+        // Update the reportStatus in the training session
+        val reportStatusUpdate = trainingSession.reportStatus.toMutableMap()
+        reportStatusUpdate[userId] = true
+        batch.update(db.collection("training_sessions").document(trainingSession.id), "reportStatus", reportStatusUpdate)
+
+        // Add the report reference to the user's document
+        batch.update(db.collection("users").document(userId), "trainingSessionsReports", FieldValue.arrayUnion(reportRef))
+
+        // Commit the batch operation
+        batch.commit().addOnCompleteListener { task ->
+            onComplete(task.isSuccessful)
+        }
+    }
+
 
 
 }

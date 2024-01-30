@@ -1,6 +1,8 @@
 package com.example.fitfinder.ui.exercise
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +14,11 @@ import com.example.fitfinder.data.repository.exercise.UnfilledReportsRepository
 import com.example.fitfinder.databinding.FragmentReportAfterTrainingBinding
 import com.example.fitfinder.ui.MainActivity
 import com.example.fitfinder.util.EventObserver
+import com.example.fitfinder.util.SharedPreferencesUtil
+import com.example.fitfinder.util.ToastyType
 import com.example.fitfinder.viewmodel.ViewModelFactory
 import com.example.fitfinder.viewmodel.exercise.UnfilledReportsViewModel
+import es.dmoral.toasty.Toasty
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -46,7 +51,44 @@ class ReportAfterTrainingFragment: Fragment() {
             exerciseReportAdapter.updateData(trainingSession.exercises)
         })
 
+        unfilledReportsViewModel.toastMessageEvent.observe(viewLifecycleOwner, EventObserver { (message, type) ->
+            when (type) {
+                ToastyType.SUCCESS -> {
+                    Toasty.success(requireContext(), message, Toasty.LENGTH_SHORT, true).show()
+                    requireActivity().supportFragmentManager.popBackStack()
+                }
+                ToastyType.ERROR -> Toasty.error(requireContext(), message, Toasty.LENGTH_SHORT, true).show()
+                else -> {    // Handle any unexpected cases or log them for debugging
+                    Log.e(ContentValues.TAG, "Unexpected ToastyType: $type")
+                }
+            }
+        })
+
+
+        // Listen for the submit button click
+        binding.btnSubmit.setOnClickListener {
+            val exerciseDetails = exerciseReportAdapter.getExerciseDetails()
+            val totalExercises = exerciseReportAdapter.itemCount
+            if (validateExerciseDetails(exerciseDetails, totalExercises)) {
+                val userId = SharedPreferencesUtil.getUserId(requireContext()).toString()
+                // Get the selected report
+                unfilledReportsViewModel.selectedReport.value?.peekContent()?.let { (trainingSession, _) ->
+                    unfilledReportsViewModel.submitReport(userId, trainingSession, exerciseDetails)
+                }
+            } else {
+                Toasty.warning(requireContext(), "Please fill in all details.", Toasty.LENGTH_SHORT, true).show()
+            }
+        }
+
     }
+
+    private fun validateExerciseDetails(details: Map<String, String>, totalExercises: Int): Boolean {
+        // Check that the map has entries for all exercises and none of the values are blank
+        return details.size == totalExercises && details.values.none { it.isBlank() }
+    }
+
+
+
 
     private fun displayTrainingSessionDetails(trainingSession: TrainingSession, partnerDetails: Map<String, Any?>) {
         binding.tvTime.text = formatDateTime(trainingSession.dateTime.toDate())
