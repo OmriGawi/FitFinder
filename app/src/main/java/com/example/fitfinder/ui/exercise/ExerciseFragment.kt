@@ -48,7 +48,11 @@ class ExerciseFragment : Fragment() {
     }
 
     private fun navigateToProgress() {
-        // Replace with actual fragment class and ID
+        val progressFragment = ProgressFragment()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, progressFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun navigateToTrainingSessions() {

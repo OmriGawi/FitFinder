@@ -1,0 +1,45 @@
+<!-- recycler_item_progress.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="4">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Push Ups"
+        android:fontFamily="@font/poppinssemibold"/>
+
+    <TextView
+        android:id="@+id/tv_firstTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="10"
+        android:fontFamily="@font/poppinsregular"/>
+
+    <TextView
+        android:id="@+id/tv_lastTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="40"
+        android:fontFamily="@font/poppinsregular"/>
+
+    <TextView
+        android:id="@+id/tv_progress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="400%"
+        android:fontFamily="@font/poppinsregular"/>
+
+
+</LinearLayout>
