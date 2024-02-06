@@ -21,7 +21,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="10"
-        android:fontFamily="@font/poppinsregular"/>
+        android:fontFamily="@font/poppinssemibold"/>
 
     <TextView
         android:id="@+id/tv_lastTime"
@@ -30,7 +30,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="40"
-        android:fontFamily="@font/poppinsregular"/>
+        android:fontFamily="@font/poppinssemibold"/>
 
     <TextView
         android:id="@+id/tv_progress"
@@ -39,7 +39,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="400%"
-        android:fontFamily="@font/poppinsregular"/>
+        android:fontFamily="@font/poppinssemibold"/>
 
 
 </LinearLayout>
