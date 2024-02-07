@@ -1,0 +1,38 @@
+<!-- recycler_item_progress.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:weightSum="3">
+
+    <TextView
+        android:id="@+id/tv_partner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Daniel Cohen"
+        android:fontFamily="@font/poppinssemibold"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="16/4/2023 9:00"
+        android:fontFamily="@font/poppinssemibold"/>
+
+    <TextView
+        android:id="@+id/tv_sportCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Swimming"
+        android:fontFamily="@font/poppinssemibold"/>
+
+
+
+</LinearLayout>

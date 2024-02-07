@@ -8,6 +8,7 @@ import com.example.fitfinder.data.repository.calendar.CalendarCreateEventReposit
 import com.example.fitfinder.data.repository.calendar.CalendarRepository
 import com.example.fitfinder.data.repository.exercise.NewInvitesRepository
 import com.example.fitfinder.data.repository.exercise.ProgressRepository
+import com.example.fitfinder.data.repository.exercise.TrainingSessionsRepository
 import com.example.fitfinder.data.repository.exercise.UnfilledReportsRepository
 import com.example.fitfinder.data.repository.location.LocationRepository
 import com.example.fitfinder.data.repository.messages.ChatRepository
@@ -24,6 +25,7 @@ import com.example.fitfinder.viewmodel.calendar.CalendarCreateEventViewModel
 import com.example.fitfinder.viewmodel.calendar.CalendarViewModel
 import com.example.fitfinder.viewmodel.exercise.NewInvitesViewModel
 import com.example.fitfinder.viewmodel.exercise.ProgressViewModel
+import com.example.fitfinder.viewmodel.exercise.TrainingSessionsViewModel
 import com.example.fitfinder.viewmodel.exercise.UnfilledReportsViewModel
 import com.example.fitfinder.viewmodel.location.LocationViewModel
 import com.example.fitfinder.viewmodel.messages.ChatViewModel
@@ -98,6 +100,10 @@ class ViewModelFactory(private val repository: BaseRepository) : ViewModelProvid
         // Progress
         if (modelClass.isAssignableFrom(ProgressViewModel::class.java)) {
             return ProgressViewModel(repository as ProgressRepository) as T
+        }
+        // TrainingSessions
+        if (modelClass.isAssignableFrom(TrainingSessionsViewModel::class.java)) {
+            return TrainingSessionsViewModel(repository as TrainingSessionsRepository) as T
         }
 
         // Add more conditions for other ViewModel classes

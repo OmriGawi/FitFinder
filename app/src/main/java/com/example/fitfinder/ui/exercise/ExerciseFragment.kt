@@ -56,7 +56,11 @@ class ExerciseFragment : Fragment() {
     }
 
     private fun navigateToTrainingSessions() {
-        // Replace with actual fragment class and ID
+        val trainingSessionsFragment = TrainingSessionsFragment()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, trainingSessionsFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun navigateToUnfilledReports() {

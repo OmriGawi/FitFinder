@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Radius Dropdown -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_filter"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Filter"
+        android:layout_gravity="center">
+
+        <AutoCompleteTextView
+            android:id="@+id/ac_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinssemibold"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="4dp"
+        android:weightSum="3"
+        android:layout_marginTop="10dp">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Partner"
+            android:fontFamily="@font/poppinsbold"
+            android:gravity="center"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Date"
+            android:fontFamily="@font/poppinsbold"
+            android:gravity="center"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sport Category"
+            android:fontFamily="@font/poppinsbold"
+            android:gravity="center"
+            android:textSize="15sp"/>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_trainingSessions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        tools:listitem="@layout/recycler_item_training_sessions"/>
+
+</LinearLayout>
