@@ -166,6 +166,7 @@ class CalendarCreateEventFragment: Fragment(),
                 binding.autoCompleteTextViewPartner.text.isNotEmpty() &&
                 binding.btnDate.text.isNotEmpty() &&
                 binding.btnTime.text.isNotEmpty() &&
+                binding.btnTime.text.toString() != "Time" &&
                 binding.etLocation.text.isNotEmpty()
     }
 
