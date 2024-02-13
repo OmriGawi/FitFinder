@@ -112,7 +112,7 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
             currentProfile?.profilePictureUrl = downloadUri.toString()
             _userProfile.postValue(currentProfile!!)
             _isLoading.postValue(false)  // Hide the ProgressBar
-            _toastMessageEvent.postValue(Event(Pair("Image uploaded successfully!", ToastyType.SUCCESS)))
+            _toastMessageEvent.postValue(Event(Pair("Press Save to submit", ToastyType.INFO)))
         }.addOnFailureListener {
             // Notify the user of the error
             _toastMessageEvent.postValue(Event(Pair("Failed to upload the image.", ToastyType.ERROR)))
@@ -124,6 +124,7 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         val currentProfile = _userProfile.value
         currentProfile?.userType = userType
         _userProfile.postValue(currentProfile!!)
+        _toastMessageEvent.postValue(Event(Pair("Press Save to submit", ToastyType.INFO)))
     }
 
     fun updateWorkoutTimes(updatedWorkoutTimes: MutableList<WorkoutTime>) {
@@ -131,6 +132,7 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         currentProfile?.workoutTimes?.clear()
         currentProfile?.workoutTimes?.addAll(updatedWorkoutTimes)
         _userProfile.postValue(currentProfile!!)
+        _toastMessageEvent.postValue(Event(Pair("Press Save to submit", ToastyType.INFO)))
     }
 
     fun addAdditionalPicture(userId: String, uri: Uri) {
@@ -138,7 +140,7 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
             val currentProfile = _userProfile.value
             currentProfile?.additionalPictures?.add(downloadUri.toString()) // 0 : to the beginning of the list
             _userProfile.postValue(currentProfile!!)
-            _toastMessageEvent.postValue(Event(Pair("Additional Image uploaded successfully!", ToastyType.SUCCESS)))
+            _toastMessageEvent.postValue(Event(Pair("Press Save to submit", ToastyType.INFO)))
         }.addOnFailureListener {
             // Notify the user of the error
             _toastMessageEvent.postValue(Event(Pair("Failed to upload the additional image.", ToastyType.ERROR)))
@@ -149,24 +151,36 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
         val currentProfile = _userProfile.value
         currentProfile?.additionalPictures?.remove(imageUrl)
         _userProfile.postValue(currentProfile!!)
+        _toastMessageEvent.postValue(Event(Pair("Press Save to submit", ToastyType.INFO)))
     }
 
     fun addSportCategory(sportCategory: SportCategory) {
         val currentProfile = _userProfile.value
-        currentProfile?.sportCategories?.add(0, sportCategory)  // 0 : to the beginning of the list
-        _userProfile.postValue(currentProfile!!)
+
+        // Check if the sportCategory is already in the list
+        val containsCategory = currentProfile?.sportCategories?.any {
+            it.name == sportCategory.name && it.skillLevel == sportCategory.skillLevel
+        } ?: false
+
+        // Add the sportCategory only if it's not already in the list
+        if (!containsCategory) {
+            currentProfile?.sportCategories?.add(0, sportCategory) // Adds to the beginning of the list
+            _userProfile.postValue(currentProfile!!)
+        }
     }
 
     fun removeSportCategory(sportCategory: SportCategory) {
         val currentProfile = _userProfile.value
         currentProfile?.sportCategories?.remove(sportCategory)
         _userProfile.postValue(currentProfile!!)
+        _toastMessageEvent.postValue(Event(Pair("Press Save to submit", ToastyType.INFO)))
     }
 
     fun updateUserDescription(description: String) {
         val currentProfile = _userProfile.value
         currentProfile?.description = description
         _userProfile.postValue(currentProfile!!)
+        _toastMessageEvent.postValue(Event(Pair("Press Save to submit", ToastyType.INFO)))
     }
 
     fun updateUserProfile(userId: String) {

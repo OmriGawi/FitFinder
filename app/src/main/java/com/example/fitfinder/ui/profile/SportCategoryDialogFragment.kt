@@ -83,7 +83,7 @@ class SportCategoryDialogFragment : DialogFragment() {
 
                 val sportCategory = SportCategory(selectedCategory, selectedSkillLevel)
                 userProfileViewModel.addSportCategory(sportCategory)
-                Toasty.success(requireContext(), "Sport category added successfully!.", Toasty.LENGTH_SHORT, true).show()
+                Toasty.info(requireContext(), "Press Save to submit", Toasty.LENGTH_SHORT, true).show()
 
                 dismiss()
             }
