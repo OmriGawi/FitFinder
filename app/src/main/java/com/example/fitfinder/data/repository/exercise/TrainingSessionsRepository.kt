@@ -6,6 +6,8 @@ import com.example.fitfinder.data.repository.BaseRepository
 import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
+import kotlin.Comparator
 
 class TrainingSessionsRepository: BaseRepository() {
     private val db = FirebaseFirestore.getInstance()
@@ -44,11 +46,21 @@ class TrainingSessionsRepository: BaseRepository() {
 
             Tasks.whenAllComplete(tasks)
                 .addOnSuccessListener { trainingSessionTasks ->
+                    val now = Date() // Get current date and time
                     val trainingSessionDetailsList = trainingSessionTasks.mapNotNull { task ->
                         if (task.isSuccessful && task.result != null) {
                             task.result as Pair<TrainingSession, Map<String, Any?>>
                         } else null
-                    }.sortedByDescending { it.first.dateTime.toDate() }
+                    }.sortedWith(Comparator { o1, o2 ->
+                        val date1 = o1.first.dateTime.toDate()
+                        val date2 = o2.first.dateTime.toDate()
+
+                        when {
+                            date1.before(now) && date2.before(now) -> date2.compareTo(date1) // Both before now, sort descending
+                            date1.after(now) && date2.after(now) -> date1.compareTo(date2) // Both after now, sort ascending
+                            else -> if (date1.before(now)) -1 else 1 // One is before now and one is after
+                        }
+                    })
                     onSessionsFetched(trainingSessionDetailsList)
                 }
         }.addOnFailureListener { e ->
