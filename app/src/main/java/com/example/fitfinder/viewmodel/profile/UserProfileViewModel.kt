@@ -88,7 +88,7 @@ class UserProfileViewModel(private val repository: UserProfileRepository) : View
             bundle.putString("profilePictureUrl", userProfile.profilePictureUrl)
             bundle.putString("userType", userProfile.userType.toString())
 
-            val workoutTimesStr = userProfile.workoutTimes.joinToString(separator = ",") { it.name }
+            val workoutTimesStr = userProfile.workoutTimes.joinToString(separator = ", ") { it.name }
             bundle.putString("workoutTimes", workoutTimesStr)
 
             // Convert each SportCategory into a String representation

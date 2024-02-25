@@ -101,7 +101,7 @@ class PotentialUsersFragment :
         bundle.putString("profilePictureUrl", user.profilePictureUrl)
         bundle.putString("userType", user.userType.toString())
 
-        val workoutTimesStr = user.workoutTimes.joinToString(separator = ",") { it.name }
+        val workoutTimesStr = user.workoutTimes.joinToString(separator = ", ") { it.name }
         bundle.putString("workoutTimes", workoutTimesStr)
 
         // Convert each SportCategory into a String representation
