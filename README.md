@@ -1,8 +1,8 @@
-# FitFinder - Find Your Perfect Workout Partner (Still in progress)
+# FitFinder - Find Your Perfect Workout Partner
 
-Matching app based on the MVVM architecture using Kotlin, ViewModel, LiveData, Coroutines, Navigation and more.
+Matching app based on the MVVM architecture using Kotlin, Firebase, ViewModel, LiveData, Coroutines, Navigation and more.
 
-## Architecture
+## MVVM Architecture
 
 The project uses MVVM architecture pattern.
 
@@ -24,24 +24,19 @@ The project uses MVVM architecture pattern.
 
 
 ### Login | Register
-| <img src="screenshots/Login.png" width="200"/> | <img src="screenshots/Register.png" width="200"/> |
-|:---:|:---:|
+<img src="screenshots/Login_Register.png" width="400"/>
 
 ### Profile
-<img src="screenshots/Profile.png" width="200"/>
+<img src="screenshots/Profile.png" width="500"/>
+
+### Search Potential Partners
+<img src="screenshots/Search.png" width="500"/>
 
 ### Messages | Chat
-| <img src="screenshots/Messages.png" width="200"/> | <img src="screenshots/Chat.png" width="200"/> |
-|:---:|:---:|
+<img src="screenshots/Chat.png" width="400"/>
 
-### Calendar | Create Event
-| <img src="screenshots/Calendar.png" width="200"/> | <img src="screenshots/CreateEvent.png" width="200"/> |
-|:---:|:---:|
+### Calendar | Invite
+<img src="screenshots/Invite.png" width="400"/>
 
-### Exercise
-<img src="screenshots/Exercise.png" width="200"/>
-
-
-
-
-
+### Exercises
+<img src="screenshots/Exercises.png" width="400"/>
