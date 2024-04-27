@@ -24,7 +24,7 @@ The project uses MVVM architecture pattern.
 
 
 ### Login | Register
-<img src="screenshots/Login_Register.png" width="400"/>
+<img src="screenshots/Login_Register.png" width="500"/>
 
 ### Profile
 <img src="screenshots/Profile.png" width="500"/>
